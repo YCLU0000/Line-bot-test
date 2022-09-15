@@ -14,7 +14,6 @@ from linebot.exceptions import (
 )
 from linebot.models import *
 
-from g_search import g_search
 
 # Import the beautifulsoup 
 # and request libraries of python.
