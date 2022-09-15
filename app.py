@@ -14,7 +14,7 @@ from linebot.exceptions import (
 )
 from linebot.models import *
 
-import g_search
+from g_search import g_search
 
 app = Flask(__name__)
 
