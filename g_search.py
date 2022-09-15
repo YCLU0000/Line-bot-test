@@ -26,7 +26,7 @@ def g_search(query):
     request_result=requests.get( url )
   
     # Creating soup from the fetched request
-    soup = bs4.BeautifulSoup(request_result.text,
+    soup = BeautifulSoup(request_result.text,
                          "lxml")
     # Find all the a tags and get the text/href
     tags = soup.find_all("a")
