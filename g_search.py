@@ -30,14 +30,15 @@ def g_search(query):
                          "lxml")
     # Find all the a tags and get the text/href
     tags = soup.find_all("a")
+    info = ""
     for tag in tags:
         href = re.search("https?://\S*&sa",tag["href"])
         text = tag.getText()
         if (href and text not in ["地圖","規劃路線","網站"]):
             href = href.group(0)[:-3]
-            print(text)
-            print(href)
-            print("------")
+            info = info + text + "\n" + href + "\n" + "-------------" + "\n"
+            
+    return info
 
 
 # In[88]:
@@ -45,7 +46,7 @@ def g_search(query):
 
 #test
 if __name__ == "__main__":
-    g_search("梨園湯包")
+   print(g_search("梨園湯包"))
 
 
 # In[ ]:
