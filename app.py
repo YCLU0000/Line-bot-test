@@ -14,6 +14,8 @@ from linebot.exceptions import (
 )
 from linebot.models import *
 
+import g_search
+
 app = Flask(__name__)
 
 # Channel Access Token
@@ -39,7 +41,12 @@ def callback():
 # 處理訊息
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    message = TextSendMessage(text="E04你娘")
+    if(event.message.text in ['找美食', 'food', 'find food']):
+        message = TextSendMessage(text="請問你想找的店名叫:")
+    else :
+        g_search_res = g_search(event.message.text)
+        message = TextSendMessage(text=g_search_res)
+    # reply
     line_bot_api.reply_message(event.reply_token, message)
 
 import os
