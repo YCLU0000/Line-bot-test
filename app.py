@@ -75,8 +75,8 @@ def handle_message(event):
     if(event.message.text in ['找美食', 'food', 'find food']):
         message = TextSendMessage(text="請問你想找的店名叫:")
     else :
-        g_search_res = g_search(event.message.text)
-        message = TextSendMessage(text=g_search_res)
+        
+        message = TextSendMessage(text=event.message.text)
     # reply
     line_bot_api.reply_message(event.reply_token, message)
 
