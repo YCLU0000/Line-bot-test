@@ -118,8 +118,8 @@ def handle_message(event):
         columns=[
             CarouselColumn(
             thumbnail_image_url = "https://www.iberdrola.com/documents/20125/39904/real_food_746x419.jpg",
-            title = "台北市",#scrapping(event.message.text),
-            text = "台北市",#scrapping(event.message.text),
+            title = scrapping(event.message.text),
+            text = scrapping(event.message.text),
             actions = [
                 MessageAction(
                 label = "台北市",
