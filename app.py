@@ -120,7 +120,7 @@ def handle_message(event):
         line_bot_api.reply_message(event.reply_token, carousel_message)
     # Second filter : stars
     # One variable from pervious filter needs to be record : food category
-    elif bool(re.search("料理", message)): # if detect "料理"
+    elif bool(re.search("日式|韓式|中式", message)): # if detect "日式|韓式|中式"
         #star = u'\u2B50'
         food_category = event.message.text
         carousel_message = TemplateSendMessage(
@@ -133,17 +133,17 @@ def handle_message(event):
             text = "請點選以下一個選項",
             actions = [
                 MessageAction(
-                label = "0~2 星" , # 0-2 stars
-                text = "0~2 星"),
+                label = "0~2星" , # 0-2 stars
+                text = "0~2星"),
                 MessageAction(
-                label = "2~3 星" + star, # 2-3 stars
-                text = "2~3 星"),
+                label = "2~3星", # 2-3 stars
+                text = "2~3星"),
                 MessageAction(
-                label = "3~4 星" + star, # 3-4 stars
-                text = "3~4 星"),
+                label = "3~4星", # 3-4 stars
+                text = "3~4星"),
                 MessageAction(
-                label = "4~5 星" + star, # 4-5 stars
-                text = "4~5 星")
+                label = "4~5星", # 4-5 stars
+                text = "4~5星")
             ])
         ]))
         line_bot_api.reply_message(event.reply_token, carousel_message)
