@@ -121,7 +121,7 @@ def handle_message(event):
     # Second filter : stars
     # One variable from pervious filter needs to be record : food category
     elif bool(re.match("料理", message)): # if detect "料理"
-        star = u'\u2B50'
+        #star = u'\u2B50'
         food_category = event.message.text
         carousel_message = TemplateSendMessage(
         alt_text = "star",
@@ -133,23 +133,23 @@ def handle_message(event):
             text = "請點選以下一個選項",
             actions = [
                 MessageAction(
-                label = "0~2 " + star, # 0-2 stars
-                text = "0~2 stars"),
+                label = "0~2 星" , # 0-2 stars
+                text = "0~2 星"),
                 MessageAction(
-                label = "2~3 " + star, # 2-3 stars
-                text = "2~3 stars"),
+                label = "2~3 星" + star, # 2-3 stars
+                text = "2~3 星"),
                 MessageAction(
-                label = "3~4 " + star, # 3-4 stars
-                text = "3~4 stars"),
+                label = "3~4 星" + star, # 3-4 stars
+                text = "3~4 星"),
                 MessageAction(
-                label = "4~5 " + star, # 4-5 stars
-                text = "4~5 stars")
+                label = "4~5 星" + star, # 4-5 stars
+                text = "4~5 星")
             ])
         ]))
         line_bot_api.reply_message(event.reply_token, carousel_message)
     # Third filter : take out / inside
     # One variable from pervious filter needs to be record : star
-    elif bool(re.match("stars", message)): # if detect "star"
+    elif bool(re.match("星", message)): # if detect "star"
         stars = event.message.text
         carousel_message = TemplateSendMessage(
         alt_text = "takeout",
@@ -202,15 +202,12 @@ def handle_message(event):
         columns=[
             CarouselColumn(
             thumbnail_image_url = "https://www.iberdrola.com/documents/20125/39904/real_food_746x419.jpg",
-            title = "台北市",#scrapping(event.message.text),
-            text = "台北市",#scrapping(event.message.text),
+            title = "這間餐廳很適合你!",#scrapping(event.message.text),
+            text = "台北市 - 梨園湯包",#scrapping(event.message.text),
             actions = [
-                MessageAction(
-                label = "台北市",
-                text = "台北市"),
-                MessageAction(
-                label = "台北市",
-                text = "台北市")
+                URIAction(
+                label = "點這裡去Google Map!",
+                uri = "https://goo.gl/maps/nWsFPjAVzZtaFbgs5")
             ])
         ]))
         line_bot_api.reply_message(event.reply_token, carousel_message)
