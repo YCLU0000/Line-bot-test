@@ -133,17 +133,11 @@ def handle_message(event):
             text = "請點選以下一個選項",
             actions = [
                 MessageAction(
-                label = "0~2星" , # 0-2 stars
-                text = "0~2星"),
+                label = "三星以上",
+                text = "三星以上"),
                 MessageAction(
-                label = "2~3星", # 2-3 stars
-                text = "2~3星"),
-                MessageAction(
-                label = "3~4星", # 3-4 stars
-                text = "3~4星"),
-                MessageAction(
-                label = "4~5星", # 4-5 stars
-                text = "4~5星")
+                label = "四星以上",
+                text = "四星以上")
             ])
         ]))
         line_bot_api.reply_message(event.reply_token, carousel_message)
