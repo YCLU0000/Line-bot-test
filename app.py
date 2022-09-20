@@ -18,7 +18,7 @@ from linebot.models import *
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 from parsel import Selector
-import time
+#import time
 
 
 
