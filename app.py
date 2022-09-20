@@ -45,7 +45,7 @@ def handle_message(event):
         alt_text = "food_cate",
         template = CarouselTemplate(
         columns=[
-            CarouseColumn(
+            CarouselColumn(
             thumbnail_image_url = "https://www.iberdrola.com/documents/20125/39904/real_food_746x419.jpg",
             title = "請問你想吃甚麼種類?",
             text = "請點選其中一個種類",
@@ -61,6 +61,5 @@ def handle_message(event):
         line_bot_api.reply_message(event.reply_token, carousel_message)
     else:
         line_bot_api.reply_message(event.reply_token, TextSendMessage(message))
-
 if __name__ == "__main__":
     app.run()
