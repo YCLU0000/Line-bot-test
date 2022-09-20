@@ -58,7 +58,7 @@ def handle_message(event):
                 text = "中式料理")
             ])
         ]))
-        line_bot_api.reply_message(event.reply_token, TextSendMessage(carousel_message))
+        line_bot_api.reply_message(event.reply_token, carousel_message)
     else:
         line_bot_api.reply_message(event.reply_token, TextSendMessage(message))
 
