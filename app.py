@@ -18,6 +18,8 @@ from linebot.models import *
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 from parsel import Selector
+import datetime
+import re
 #import time
 
 
@@ -92,34 +94,136 @@ def callback():
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     message = event.message.text
-    if "結果" in message :
+    # First Filter : Food category
+    # Click one action in the picture list at the bottom of line
+    if bool(re.match("隨機", message)) :
         carousel_message = TemplateSendMessage(
-        alt_text = "results",
+        alt_text = "food_category",
         template = CarouselTemplate(
         columns=[
             CarouselColumn(
-            thumbnail_image_url = "https://www.iberdrola.com/documents/20125/39904/real_food_746x419.jpg",
+            thumbnail_image_url = "https://www.iberdrola.com/documents/20125/39904/real_food_746x419.jpg", # thumbnail for the message
             title = "請問你想吃甚麼種類?",
-            text = "請點選其中一個種類",
+            text = "請點選以下一個選項",
             actions = [
                 MessageAction(
-                label = "台北市",
-                text = "台北市"),
+                label = "日式料理",
+                text = "日式料理"),
                 MessageAction(
-                label = "台北市",
-                text = "台北市")
+                label = "韓式料理",
+                text = "韓式料理"),
+                MessageAction(
+                label = "中式料理",
+                text = "中式料理")
             ])
         ]))
         line_bot_api.reply_message(event.reply_token, carousel_message)
-    elif message == "台北市":
+    # Second filter : stars
+    # One variable from pervious filter needs to be record : food category
+    elif bool(re.match("料理", message)): # if detect "料理"
+        star = u'\u2B50'
+        food_category = event.message.text
+        carousel_message = TemplateSendMessage(
+        alt_text = "star",
+        template = CarouselTemplate(
+        columns=[
+            CarouselColumn(
+            thumbnail_image_url = "https://www.iberdrola.com/documents/20125/39904/real_food_746x419.jpg", # thumbnail for the message
+            title = "請問你想找幾星的餐廳?",
+            text = "請點選以下一個選項",
+            actions = [
+                MessageAction(
+                label = "0~2 " + star, # 0-2 stars
+                text = "0~2 stars"),
+                MessageAction(
+                label = "2~3 " + star, # 2-3 stars
+                text = "2~3 stars"),
+                MessageAction(
+                label = "3~4 " + star, # 3-4 stars
+                text = "3~4 stars"),
+                MessageAction(
+                label = "4~5 " + star, # 4-5 stars
+                text = "4~5 stars")
+            ])
+        ]))
+        line_bot_api.reply_message(event.reply_token, carousel_message)
+    # Third filter : take out / inside
+    # One variable from pervious filter needs to be record : star
+    elif bool(re.match("stars", message)): # if detect "star"
+        stars = event.message.text
+        carousel_message = TemplateSendMessage(
+        alt_text = "takeout",
+        template = CarouselTemplate(
+        columns=[
+            CarouselColumn(
+            thumbnail_image_url = "https://www.iberdrola.com/documents/20125/39904/real_food_746x419.jpg", # thumbnail for the message
+            title = "請問你想外帶還是內用?",
+            text = "請點選以下一個選項",
+            actions = [
+                MessageAction(
+                label = "內用", 
+                text = "內用"),
+                MessageAction(
+                label = "外帶",
+                text = "外帶")
+            ])
+        ]))
+        line_bot_api.reply_message(event.reply_token, carousel_message)
+    # forth filter : date
+    # One variable from pervious filter needs to be record : takeout
+    '''
+    elif bool(re.match("內用|外帶", message)): # if detect "內用" or "外帶"
+        takeout = event.message.text
+        carousel_message = TemplateSendMessage(
+        alt_text = "busy",
+        template = CarouselTemplate(
+        columns=[
+            CarouselColumn(
+            thumbnail_image_url = "https://www.iberdrola.com/documents/20125/39904/real_food_746x419.jpg", # thumbnail for the message
+            title = "請問你想外帶還是內用?",
+            text = "請點選以下一個選項",
+            actions = [
+                MessageAction(
+                label = "內用", 
+                text = "內用"),
+                MessageAction(
+                label = "外帶",
+                text = "外帶")
+            ])
+        ]))
+        line_bot_api.reply_message(event.reply_token, carousel_message) '''
+    # five filter : display number
+    # One variable from pervious filter needs to be record : date
+    elif bool(re.match("內用|外帶", message)):
+        time = str(datetime.date.today())
+        carousel_message = TemplateSendMessage(
+        alt_text = "display",
+        template = CarouselTemplate(
+        columns=[
+            CarouselColumn(
+            thumbnail_image_url = "https://www.iberdrola.com/documents/20125/39904/real_food_746x419.jpg",
+            title = "你要顯示幾個結果?",#scrapping(event.message.text),
+            text = "請點選以下一個選項",#scrapping(event.message.text),
+            actions = [
+                MessageAction(
+                label = "0~5",
+                text = "我要0~5個結果"),
+                MessageAction(
+                label = "6~10",
+                text = "我要6~10個結果")
+            ])
+        ]))
+        line_bot_api.reply_message(event.reply_token, carousel_message)
+    # Showing results
+    elif bool(re.match("結果" ,message)):
         carousel_message = TemplateSendMessage(
         alt_text = "results",
         template = CarouselTemplate(
         columns=[
             CarouselColumn(
             thumbnail_image_url = "https://www.iberdrola.com/documents/20125/39904/real_food_746x419.jpg",
-            title = scrapping("台北市"),
-            text = scrapping("台北市"),
+            title = "台北市",#scrapping(event.message.text),
+            text = "台北市",#scrapping(event.message.text),
             actions = [
                 MessageAction(
                 label = "台北市",
