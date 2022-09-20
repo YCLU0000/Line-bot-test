@@ -40,26 +40,7 @@ def callback():
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     message = event.message.text
-    if "隨機找店家" in message :
-        carousel_message = TemplateSendMessage(
-        alt_text = "food_cate",
-        template = CarouselTemplate(
-        columns=[
-            CarouselColumn(
-            thumbnail_image_url = "https://www.iberdrola.com/documents/20125/39904/real_food_746x419.jpg",
-            title = "請問你想吃甚麼種類?",
-            text = "請點選其中一個種類",
-            actions = [
-                MessageAction(
-                label = "日式料理",
-                text = "日式料理"),
-                MessageAction(
-                label = "中式料理",
-                text = "中式料理")
-            ])
-        ]))
-        line_bot_api.reply_message(event.reply_token, carousel_message)
-    else:
-        line_bot_api.reply_message(event.reply_token, TextSendMessage(message))
+    line_bot_api.reply_message(event.reply_token, TextSendMessage(message))
+    
 if __name__ == "__main__":
     app.run()
