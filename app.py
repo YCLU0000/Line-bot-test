@@ -39,7 +39,7 @@ def callback():
 # 處理訊息
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-     message = event.message.text
+    message = event.message.text
     if "隨機找店家" in message :
         carousel_message = TemplateSendMessage(
         alt_text = "food_cate",
@@ -62,7 +62,5 @@ def handle_message(event):
     else:
         line_bot_api.reply_message(event.reply_token, TextSendMessage(message))
 
-import os
 if __name__ == "__main__":
-    port = int(os.environ.get('PORT', 5000))
-    app.run(host='0.0.0.0', port=port)
+    app.run()
