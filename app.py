@@ -171,27 +171,7 @@ def handle_message(event):
         line_bot_api.reply_message(event.reply_token, carousel_message)
     # forth filter : date
     # One variable from pervious filter needs to be record : takeout
-    '''
-    elif bool(re.match("內用|外帶", message)): # if detect "內用" or "外帶"
-        takeout = event.message.text
-        carousel_message = TemplateSendMessage(
-        alt_text = "busy",
-        template = CarouselTemplate(
-        columns=[
-            CarouselColumn(
-            thumbnail_image_url = "https://www.iberdrola.com/documents/20125/39904/real_food_746x419.jpg", # thumbnail for the message
-            title = "請問你想外帶還是內用?",
-            text = "請點選以下一個選項",
-            actions = [
-                MessageAction(
-                label = "內用", 
-                text = "內用"),
-                MessageAction(
-                label = "外帶",
-                text = "外帶")
-            ])
-        ]))
-        line_bot_api.reply_message(event.reply_token, carousel_message) '''
+    
     # five filter : display number
     # One variable from pervious filter needs to be record : date
     elif bool(re.match("內用|外帶", message)):
