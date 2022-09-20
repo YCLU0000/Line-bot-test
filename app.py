@@ -96,7 +96,7 @@ def handle_message(event):
     message = event.message.text
     # First Filter : Food category
     # Click one action in the picture list at the bottom of line
-    if bool(re.match("隨機", message)) :
+    if bool(re.search("隨機", message)) :
         carousel_message = TemplateSendMessage(
         alt_text = "food_category",
         template = CarouselTemplate(
@@ -120,7 +120,7 @@ def handle_message(event):
         line_bot_api.reply_message(event.reply_token, carousel_message)
     # Second filter : stars
     # One variable from pervious filter needs to be record : food category
-    elif bool(re.match("料理", message)): # if detect "料理"
+    elif bool(re.search("料理", message)): # if detect "料理"
         #star = u'\u2B50'
         food_category = event.message.text
         carousel_message = TemplateSendMessage(
@@ -149,7 +149,7 @@ def handle_message(event):
         line_bot_api.reply_message(event.reply_token, carousel_message)
     # Third filter : take out / inside
     # One variable from pervious filter needs to be record : star
-    elif bool(re.match("星", message)): # if detect "star"
+    elif bool(re.search("星", message)): # if detect "star"
         stars = event.message.text
         carousel_message = TemplateSendMessage(
         alt_text = "takeout",
@@ -174,7 +174,7 @@ def handle_message(event):
     
     # five filter : display number
     # One variable from pervious filter needs to be record : date
-    elif bool(re.match("內用|外帶", message)):
+    elif bool(re.search("內用|外帶", message)):
         time = str(datetime.date.today())
         carousel_message = TemplateSendMessage(
         alt_text = "display",
@@ -195,7 +195,7 @@ def handle_message(event):
         ]))
         line_bot_api.reply_message(event.reply_token, carousel_message)
     # Showing results
-    elif bool(re.match("結果" ,message)):
+    elif bool(re.search("結果" ,message)):
         carousel_message = TemplateSendMessage(
         alt_text = "results",
         template = CarouselTemplate(
