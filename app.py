@@ -14,39 +14,6 @@ from linebot.exceptions import (
 )
 from linebot.models import *
 
-
-# Import the beautifulsoup 
-# and request libraries of python.
-import requests
-from bs4 import BeautifulSoup
-import re
-
-def g_search(query):
-    # Make two strings with default google search URL
-    # 'https://google.com/search?q=' and
-    # our customized search keyword.
-    # Concatenate them
-    text= query
-    url = 'https://www.google.com/search?q=' + text
-    #Fetch the URL data using requests.get(url),
-    # store it in a variable, request_result.
-    request_result=requests.get( url )
-  
-    # Creating soup from the fetched request
-    soup = BeautifulSoup(request_result.text,
-                         "lxml")
-    # Find all the a tags and get the text/href
-    tags = soup.find_all("a")
-    info = ""
-    for tag in tags:
-        href = re.search("https?://\S*&sa",tag["href"])
-        text = tag.getText()
-        if (href and text not in ["地圖","規劃路線","網站"]):
-            href = href.group(0)[:-3]
-            info = info + text + "\n" + href + "\n" + "-------------" + "\n"
-            
-    return info
-
 app = Flask(__name__)
 
 # Channel Access Token
@@ -72,13 +39,28 @@ def callback():
 # 處理訊息
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    if(event.message.text in ['找美食', 'food', 'find food']):
-        message = TextSendMessage(text="請問你想找的店名叫:")
-    else :
-        
-        message = TextSendMessage(text=event.message.text)
-    # reply
-    line_bot_api.reply_message(event.reply_token, message)
+     message = event.message.text
+    if "隨機找店家" in message :
+        carousel_message = TemplateSendMessage(
+        alt_text = "food_cate",
+        template = CarouselTemplate(
+        columns=[
+            CarouseColumn(
+            thumbnail_image_url = "https://www.iberdrola.com/documents/20125/39904/real_food_746x419.jpg",
+            title = "請問你想吃甚麼種類?",
+            text = "請點選其中一個種類",
+            actions = [
+                MessageAction(
+                label = "日式料理",
+                text = "日式料理"),
+                MessageAction(
+                label = "中式料理",
+                text = "中式料理")
+            ])
+        ]))
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(carousel_message))
+    else:
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(message))
 
 import os
 if __name__ == "__main__":
