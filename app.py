@@ -87,7 +87,19 @@ def callback():
     except InvalidSignatureError:
         abort(400)
     return 'OK'
-        
+
+# 處理訊息
+@handler.add(MessageEvent, message=TextMessage)
+def handle_message(event):
+    message = event.message.text
+    # First Filter : Food category
+    # Click one action in the picture list at the bottom of line
+    if bool(re.search("美食搜尋", message)):
+        quick_message = TextSendMessage(
+        text = "請分享你現在的位置給我 :",
+        quick_reply = QuickReply(items = [QuickReplyButton(action=LocationAction(label="傳送位置"))])
+        )
+        line_bot_api.reply_message(event.reply_token, quick_message)
 # 處理位置資訊
 @handler.add(MessageEvent, message=LocationMessage)
 def handle_message(event):
