@@ -14,6 +14,8 @@ from webdriver_manager.chrome import ChromeDriverManager
 from parsel import Selector
 import datetime
 import re
+import numpy as np
+import pandas as pd
 #import time
 
 
