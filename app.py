@@ -183,7 +183,7 @@ def handle_message(event):
     if all(answer['answer']) :
         message = "你已經全部選擇完畢 :\n種類 = {}\n星數 = {}\n內用/外帶 = {}\n顯示餐廳數 = {}".format(category, star, takeout, shownumber)
         line_bot_api.reply_message(event.reply_token, message)
-    else not*all(answer['answer'])) :
+    else not(all(answer['answer'])) :
         message = "你目前已選擇 :\n"
         pos = 0
         for answer in answer['answer']:
@@ -192,8 +192,8 @@ def handle_message(event):
                 pos = pos + 1
             elif answer == "" :
                 pos = pos + 1
-        message = message + "你還有%s項還沒有選擇"%(missing)
-        
+    message = message + "你還有%s項還沒有選擇"%(missing)
+    line_bot_api.reply_message(event.reply_token, message)    
         
     #print(event.message.type)
 import os
