@@ -204,8 +204,8 @@ def handle_message(event):
         quick_reply = QuickReply(items = [QuickReplyButton(action=LocationAction(label="傳送位置"))])
         )
         line_bot_api.reply_message(event.reply_token, quick_message)
-        print(quick_message)
-        
+    
+    print(event.message)
 import os
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 5000))
