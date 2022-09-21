@@ -178,6 +178,10 @@ def handle_message(event):
     
 @handler.add(PostbackEvent)
 def handle_message(event):
+    global category
+    global star
+    global takeout
+    global shownumber
     data = event.postback.data
     filt = ["種類", "星數", "內用/外帶", "顯示餐廳數"]
     if data[0] == "A" : # 種類
