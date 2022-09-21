@@ -1,9 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[ ]:
-
-
 from flask import Flask, request, abort
 
 from linebot import (
@@ -121,10 +115,9 @@ def handle_message(event):
     # Second filter : stars
     # One variable from pervious filter needs to be record : food category
     elif bool(re.search("日式|韓式|中式", message)): # if detect "日式|韓式|中式"
-        #star = u'\u2B50'
         food_category = event.message.text
         carousel_message = TemplateSendMessage(
-        alt_text = "star",
+        alt_text = "stars",
         template = CarouselTemplate(
         columns=[
             CarouselColumn(
@@ -205,6 +198,12 @@ def handle_message(event):
             ])
         ]))
         line_bot_api.reply_message(event.reply_token, carousel_message)
+    elif bool(re.search("quick", message)):
+        quick_message = TextSendMessage(
+        text = "測試",
+        quick_reply = QuickReply(items = [QuickReplyButton(action=LocationAction(label="傳送位置"))])
+        )
+        line_bot_api.reply_message(event.reply_token, quick_message)
         
 import os
 if __name__ == "__main__":
