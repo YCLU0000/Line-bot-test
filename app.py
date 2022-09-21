@@ -61,11 +61,8 @@ def scrapping(key_word) :
     # return
     return(picked_result)
 
-# variable setting
-category = ""
-star = ""
-takeout = ""
-shownumber = ""
+
+
 #### app
 app = Flask(__name__)
 
@@ -89,19 +86,7 @@ def callback():
     except InvalidSignatureError:
         abort(400)
     return 'OK'
-
-# 處理訊息
-@handler.add(MessageEvent, message=TextMessage)
-def handle_message(event):
-    message = event.message.text
-    # First Filter : Food category
-    # Click one action in the picture list at the bottom of line
-    if bool(re.search("美食搜尋", message)):
-        quick_message = TextSendMessage(
-        text = "請分享你現在的位置給我 :",
-        quick_reply = QuickReply(items = [QuickReplyButton(action=LocationAction(label="傳送位置"))])
-        )
-        line_bot_api.reply_message(event.reply_token, quick_message)
+        
 # 處理位置資訊
 @handler.add(MessageEvent, message=LocationMessage)
 def handle_message(event):
@@ -117,101 +102,123 @@ def handle_message(event):
         title = "請問你想吃甚麼種類?",
         text = "請點選以下一個選項",
         actions = [
-            PostbackAction(
+            MessageAction(
             label = "日式料理",
-            data = "A日式料理"),
-            PostbackAction(
+            text = "日式料理"),
+            MessageAction(
             label = "韓式料理",
-            data = "A韓式料理"),
-            PostbackAction(
+            text = "韓式料理"),
+            MessageAction(
             label = "中式料理",
-            data = "A中式料理")
-        ]),
-        CarouselColumn(
-        thumbnail_image_url = "https://www.iberdrola.com/documents/20125/39904/real_food_746x419.jpg", # thumbnail for the message
-        title = "請問你想找幾星的餐廳?",
-        text = "請點選以下一個選項",
-        actions = [
-            PostbackAction(
-            label = "三星以上",
-            data = "B三星以上"),
-            PostbackAction(
-            label = "四星以上",
-            data = "B四星以上"),
-            PostbackAction(
-            label = "都行",
-            data = "B都行")
-        ]),
-        CarouselColumn(
-        thumbnail_image_url = "https://www.iberdrola.com/documents/20125/39904/real_food_746x419.jpg", # thumbnail for the message
-        title = "請問你想外帶還是內用?",
-        text = "請點選以下一個選項",
-        actions = [
-            PostbackAction(
-            label = "內用",
-            data = "C內用"),
-            PostbackAction(
-            label = "外帶",
-            data = "C外帶"),
-            PostbackAction(
-            label = "都行",
-            data = "C都行")
-        ]),
-        CarouselColumn(
-        thumbnail_image_url = "https://www.iberdrola.com/documents/20125/39904/real_food_746x419.jpg",
-        title = "你要顯示幾個結果?",
-        text = "請點選以下一個選項",
-        actions = [
-            PostbackAction(
-            label = "0~5",
-            data = "D0~5"),
-            PostbackAction(
-            label = "6~10",
-            data = "D6~10"),
-            PostbackAction(
-            label = "都行",
-            data = "D都行")
+            text = "中式料理")
         ])
     ]))
     line_bot_api.reply_message(event.reply_token, carousel_message)
         
     
-@handler.add(PostbackEvent)
+
+# 處理訊息
+@handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    global category
-    global star
-    global takeout
-    global shownumber
-    data = event.postback.data
-    filt = ["種類", "星數", "內用/外帶", "顯示餐廳數"]
-    if data[0] == "A" : # 種類
-        category = data[2:]
-    elif data[0] == "B" : # 星
-        star = data[2:]
-    elif data[0] == "C" : # 內用/外帶
-        takeout = data[2:]
-    elif data[0] == "D" : # 數目
-        shownumber = data[2:]
-    
-    # 回應文字
-    answer = pd.DataFrame({'answer' : [category, star, takeout, shownumber]})
-    missing = (answer['answer'].values == "").sum()
-    if all(answer['answer']) :
-        message = "你已經全部選擇完畢 :\n種類 = {}\n星數 = {}\n內用/外帶 = {}\n顯示餐廳數 = {}".format(category, star, takeout, shownumber)
-        line_bot_api.reply_message(event.reply_token, message)
-    elif not(all(answer['answer'])) :
-        message = "你目前已選擇 :\n"
-        pos = 0
-        for answer in answer['answer']:
-            if answer != "" :
-                message = "%s%s: %s\n" % (message, filt[pos], answer)
-                pos = pos + 1
-            elif answer == "" :
-                pos = pos + 1
-    message = message + "你還有%s項還沒有選擇"%(missing)
-    line_bot_api.reply_message(event.reply_token, message)    
+    message = event.message.text
+    # First Filter : Food category
+    # Click one action in the picture list at the bottom of line
+    if bool(re.search("美食搜尋", message)):
+        quick_message = TextSendMessage(
+        text = "請分享你現在的位置給我 :",
+        quick_reply = QuickReply(items = [QuickReplyButton(action=LocationAction(label="傳送位置"))])
+        )
+        line_bot_api.reply_message(event.reply_token, quick_message)
         
-    #print(event.message.type)
+    # Second filter : stars
+    # One variable from pervious filter needs to be record : food category
+    elif bool(re.search("日式|韓式|中式", message)): # if detect "日式|韓式|中式"
+        food_category = event.message.text
+        carousel_message = TemplateSendMessage(
+        alt_text = "stars",
+        template = CarouselTemplate(
+        columns=[
+            CarouselColumn(
+            thumbnail_image_url = "https://www.iberdrola.com/documents/20125/39904/real_food_746x419.jpg", # thumbnail for the message
+            title = "請問你想找幾星的餐廳?",
+            text = "請點選以下一個選項",
+            actions = [
+                MessageAction(
+                label = "三星以上",
+                text = "三星以上"),
+                MessageAction(
+                label = "四星以上",
+                text = "四星以上")
+            ])
+        ]))
+        line_bot_api.reply_message(event.reply_token, carousel_message)
+    # Third filter : take out / inside
+    # One variable from pervious filter needs to be record : star
+    elif bool(re.search("星", message)): # if detect "star"
+        stars = event.message.text
+        carousel_message = TemplateSendMessage(
+        alt_text = "takeout",
+        template = CarouselTemplate(
+        columns=[
+            CarouselColumn(
+            thumbnail_image_url = "https://www.iberdrola.com/documents/20125/39904/real_food_746x419.jpg", # thumbnail for the message
+            title = "請問你想外帶還是內用?",
+            text = "請點選以下一個選項",
+            actions = [
+                MessageAction(
+                label = "內用", 
+                text = "內用"),
+                MessageAction(
+                label = "外帶",
+                text = "外帶")
+            ])
+        ]))
+        line_bot_api.reply_message(event.reply_token, carousel_message)
+    # forth filter : date
+    # One variable from pervious filter needs to be record : takeout
+    
+    # five filter : display number
+    # One variable from pervious filter needs to be record : date
+    elif bool(re.search("內用|外帶", message)):
+        time = str(datetime.date.today())
+        carousel_message = TemplateSendMessage(
+        alt_text = "display",
+        template = CarouselTemplate(
+        columns=[
+            CarouselColumn(
+            thumbnail_image_url = "https://www.iberdrola.com/documents/20125/39904/real_food_746x419.jpg",
+            title = "你要顯示幾個結果?",#scrapping(event.message.text),
+            text = "請點選以下一個選項",#scrapping(event.message.text),
+            actions = [
+                MessageAction(
+                label = "0~5",
+                text = "我要0~5個結果"),
+                MessageAction(
+                label = "6~10",
+                text = "我要6~10個結果")
+            ])
+        ]))
+        line_bot_api.reply_message(event.reply_token, carousel_message)
+    # Showing results
+    elif bool(re.search("結果" ,message)):
+        carousel_message = TemplateSendMessage(
+        alt_text = "results",
+        template = CarouselTemplate(
+        columns=[
+            CarouselColumn(
+            thumbnail_image_url = "https://www.iberdrola.com/documents/20125/39904/real_food_746x419.jpg",
+            title = "這間餐廳很適合你!",#scrapping(event.message.text),
+            text = "台北市 - 梨園湯包",#scrapping(event.message.text),
+            actions = [
+                URIAction(
+                label = "點這裡去Google Map!",
+                uri = "https://goo.gl/maps/nWsFPjAVzZtaFbgs5")
+            ])
+        ]))
+        line_bot_api.reply_message(event.reply_token, carousel_message)
+    
+    
+    print(event.message.type)
 import os
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 5000))
