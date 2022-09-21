@@ -165,7 +165,8 @@ def handle_message(event):
     line_bot_api.reply_message(event.reply_token, carousel_message)
         
     
-@handler.add(PostbackEvent):
+@handler.add(PostbackEvent)
+def handle_message(event):
     data = event.postback.data
     filt = ["種類", "星數", "內用/外帶", "顯示餐廳數"]
     if data[0] == "A" : # 種類
