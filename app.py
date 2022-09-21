@@ -126,20 +126,41 @@ def handle_message(event):
             data = "A中式料理")
         ]),
         CarouselColumn(
-        thumbnail_image_url = "https://www.iberdrola.com/documents/20125/39904/real_food_746x419.jpg", # thumbnail for the message
-        title = "請問你想吃甚麼種類?",
-        text = "請點選以下一個選項",
-        actions = [
-            PostbackAction(
-            label = "日式料理",
-            data = "A日式料理"),
-            PostbackAction(
-            label = "韓式料理",
-            data = "A韓式料理"),
-            PostbackAction(
-            label = "中式料理",
-            data = "A中式料理")
-        ])
+            thumbnail_image_url = "https://www.iberdrola.com/documents/20125/39904/real_food_746x419.jpg", # thumbnail for the message
+            title = "請問你想找幾星的餐廳?",
+            text = "請點選以下一個選項",
+            actions = [
+                PostbackAction(
+                label = "三星以上",
+                data = "B三星以上"),
+                PostbackAction(
+                label = "四星以上",
+                data = "B四星以上")
+            ]),
+        CarouselColumn(
+            thumbnail_image_url = "https://www.iberdrola.com/documents/20125/39904/real_food_746x419.jpg", # thumbnail for the message
+            title = "請問你想外帶還是內用?",
+            text = "請點選以下一個選項",
+            actions = [
+                PostbackAction(
+                label = "內用",
+                data = "C內用"),
+                PostbackAction(
+                label = "外帶",
+                data = "C外帶")
+            ]),
+        CarouselColumn(
+            thumbnail_image_url = "https://www.iberdrola.com/documents/20125/39904/real_food_746x419.jpg",
+            title = "你要顯示幾個結果?",
+            text = "請點選以下一個選項",
+            actions = [
+                PostbackAction(
+                label = "0~5",
+                data = "D0~5"),
+                PostbackAction(
+                label = "6~10",
+                data = "D6~10")
+            ])
     ]))
     line_bot_api.reply_message(event.reply_token, carousel_message)
         
