@@ -6,3 +6,5 @@ selenium
 webdriver_manager
 parsel
 datetime
+pandas
+numpy
