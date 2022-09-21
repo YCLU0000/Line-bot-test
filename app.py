@@ -124,6 +124,21 @@ def handle_message(event):
             PostbackAction(
             label = "中式料理",
             data = "A中式料理")
+        ]),
+        CarouselColumn(
+        thumbnail_image_url = "https://www.iberdrola.com/documents/20125/39904/real_food_746x419.jpg", # thumbnail for the message
+        title = "請問你想吃甚麼種類?",
+        text = "請點選以下一個選項",
+        actions = [
+            PostbackAction(
+            label = "日式料理",
+            data = "A日式料理"),
+            PostbackAction(
+            label = "韓式料理",
+            data = "A韓式料理"),
+            PostbackAction(
+            label = "中式料理",
+            data = "A中式料理")
         ])
     ]))
     line_bot_api.reply_message(event.reply_token, carousel_message)
