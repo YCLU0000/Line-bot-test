@@ -135,7 +135,10 @@ def handle_message(event):
             data = "B三星以上"),
             PostbackAction(
             label = "四星以上",
-            data = "B四星以上")
+            data = "B四星以上"),
+            PostbackAction(
+            label = "都行",
+            data = "B都行")
         ]),
         CarouselColumn(
         thumbnail_image_url = "https://www.iberdrola.com/documents/20125/39904/real_food_746x419.jpg", # thumbnail for the message
@@ -147,7 +150,10 @@ def handle_message(event):
             data = "C內用"),
             PostbackAction(
             label = "外帶",
-            data = "C外帶")
+            data = "C外帶"),
+            PostbackAction(
+            label = "都行",
+            data = "C都行")
         ]),
         CarouselColumn(
         thumbnail_image_url = "https://www.iberdrola.com/documents/20125/39904/real_food_746x419.jpg",
@@ -159,7 +165,10 @@ def handle_message(event):
             data = "D0~5"),
             PostbackAction(
             label = "6~10",
-            data = "D6~10")
+            data = "D6~10"),
+            PostbackAction(
+            label = "都行",
+            data = "D都行")
         ])
     ]))
     line_bot_api.reply_message(event.reply_token, carousel_message)
