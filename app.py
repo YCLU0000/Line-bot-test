@@ -96,7 +96,7 @@ def handle_message(event):
     message = event.message.text
     # First Filter : Food category
     # Click one action in the picture list at the bottom of line
-    if bool(re.search("美食搜尋", message)):
+    if bool(re.search("讓我選", message)):
         quick_message = TextSendMessage(
         text = "請分享你現在的位置給我 :",
         quick_reply = QuickReply(items = [QuickReplyButton(action=LocationAction(label="傳送位置"))])
@@ -209,7 +209,7 @@ def handle_message(event):
             elif answer == "" :
                 pos = pos + 1
     message = message + "你還有%s項還沒有選擇"%(missing)
-    lline_bot_api.reply_message(event.reply_token, TextSendMessage(message))    
+    line_bot_api.reply_message(event.reply_token, TextSendMessage(message))    
         
     #print(event.message.type)
 import os
