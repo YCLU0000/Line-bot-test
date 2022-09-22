@@ -98,6 +98,10 @@ def handle_message(event):
     # Click one action in the picture list at the bottom of line
     if bool(re.search("讓我選|再一次", message)):
         # reset answer
+        global category
+        global star
+        global takeout
+        global shownumber
         category, star, takeout, shownumber = "", "", "", ""
         quick_message = TextSendMessage(
         text = "請分享你現在的位置給我 :",
@@ -226,7 +230,7 @@ def handle_message(event):
             actions = [
                 MessageAction(
                 label = '正確',
-                text = '給我餐廳!'),
+                text = '給我餐廳'),
                 MessageAction(
                 label = '再一次',
                 text = '再一次')
