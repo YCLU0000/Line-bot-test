@@ -185,20 +185,35 @@ def handle_message(event):
     data = event.postback.data
     filt = ["種類", "星數", "內用/外帶", "顯示餐廳數"]
     if data[0] == "A" : # 種類
-        category = data[2:]
+        category = data[1:]
     elif data[0] == "B" : # 星
-        star = data[2:]
+        star = data[1:]
     elif data[0] == "C" : # 內用/外帶
-        takeout = data[2:]
+        takeout = data[1:]
     elif data[0] == "D" : # 數目
-        shownumber = data[2:]
+        shownumber = data[1:]
     
     # 回應文字
     answer = pd.DataFrame({'answer' : [category, star, takeout, shownumber]})
     missing = (answer['answer'].values == "").sum()
     if all(answer['answer']) :
         message = "你已經全部選擇完畢 :\n種類 = {}\n星數 = {}\n內用/外帶 = {}\n顯示餐廳數 = {}".format(category, star, takeout, shownumber)
-        line_bot_api.reply_message(event.reply_token, message)
+        carousel_message = TemplateSendMessage(
+        alt_text = "results",
+        template = CarouselTemplate(
+        columns=[
+            CarouselColumn(
+            thumbnail_image_url = "https://www.iberdrola.com/documents/20125/39904/real_food_746x419.jpg",
+            title = "這間餐廳很適合你!",#scrapping(event.message.text),
+            text = "台北市 - 梨園湯包",#scrapping(event.message.text),
+            actions = [
+                URIAction(
+                label = "點這裡去Google Map!",
+                uri = "https://goo.gl/maps/nWsFPjAVzZtaFbgs5")
+            ])
+        ]))
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(message))
+        line_bot_api.reply_message(event.reply_token, carousel_message)
     elif not(all(answer['answer'])) :
         message = "你目前已選擇 :\n"
         pos = 0
