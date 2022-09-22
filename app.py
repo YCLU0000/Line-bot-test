@@ -96,12 +96,33 @@ def handle_message(event):
     message = event.message.text
     # First Filter : Food category
     # Click one action in the picture list at the bottom of line
-    if bool(re.search("讓我選", message)):
+    if bool(re.search("讓我選|再一次", message)):
+        # reset answer
+        category, star, takeout, shownumber = "", "", "", ""
         quick_message = TextSendMessage(
         text = "請分享你現在的位置給我 :",
         quick_reply = QuickReply(items = [QuickReplyButton(action=LocationAction(label="傳送位置"))])
         )
         line_bot_api.reply_message(event.reply_token, quick_message)
+     # Showing results
+    elif bool(re.search("給我餐廳" ,message)):
+        carousel_message = TemplateSendMessage(
+        alt_text = "results",
+        template = CarouselTemplate(
+        columns=[
+            CarouselColumn(
+            thumbnail_image_url = "https://www.iberdrola.com/documents/20125/39904/real_food_746x419.jpg",
+            title = "這間餐廳很適合你!",#scrapping(event.message.text),
+            text = "台北市 - 梨園湯包",#scrapping(event.message.text),
+            actions = [
+                URIAction(
+                label = "點這裡去Google Map!",
+                uri = "https://goo.gl/maps/nWsFPjAVzZtaFbgs5")
+            ])
+        ]))
+        line_bot_api.reply_message(event.reply_token, carousel_message)
+    else :
+        line_bot_api.reply_message(event.reply_token, TextSendMessage("不好意思，我不明白你說的話"))
 # 處理位置資訊
 @handler.add(MessageEvent, message=LocationMessage)
 def handle_message(event):
@@ -198,22 +219,20 @@ def handle_message(event):
     missing = (answer['answer'].values == "").sum()
     if all(answer['answer']) :
         message = "你已經全部選擇完畢 :\n種類 = {}\n星數 = {}\n內用/外帶 = {}\n顯示餐廳數 = {}".format(category, star, takeout, shownumber)
-        carousel_message = TemplateSendMessage(
-        alt_text = "results",
-        template = CarouselTemplate(
-        columns=[
-            CarouselColumn(
-            thumbnail_image_url = "https://www.iberdrola.com/documents/20125/39904/real_food_746x419.jpg",
-            title = "這間餐廳很適合你!",#scrapping(event.message.text),
-            text = "台北市 - 梨園湯包",#scrapping(event.message.text),
+        confirm_template_message = TemplateSendMessage(
+            alt_text = "Confirm filter",
+            template = ConfirmTemplate(
+            text = "{}\n請確認是否正確".format(message),
             actions = [
-                URIAction(
-                label = "點這裡去Google Map!",
-                uri = "https://goo.gl/maps/nWsFPjAVzZtaFbgs5")
+                MessageAction(
+                label = '正確',
+                text = '給我餐廳!'),
+                MessageAction(
+                label = '再一次',
+                text = '再一次')
             ])
-        ]))
-        line_bot_api.reply_message(event.reply_token, TextSendMessage(message))
-        line_bot_api.reply_message(event.reply_token, carousel_message)
+        )
+        line_bot_api.reply_message(event.reply_token, confirm_template_message)
     elif not(all(answer['answer'])) :
         message = "你目前已選擇 :\n"
         pos = 0
