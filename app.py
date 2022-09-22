@@ -96,7 +96,7 @@ def handle_message(event):
     message = event.message.text
     # First Filter : Food category
     # Click one action in the picture list at the bottom of line
-    if bool(re.search("讓我選|再一次", message)):
+    if bool(re.search("讓我選|再一次|來個驚喜|美食排行榜", message)):
         # reset answer
         global category
         global star
