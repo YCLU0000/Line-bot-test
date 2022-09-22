@@ -209,7 +209,7 @@ def handle_message(event):
             elif answer == "" :
                 pos = pos + 1
     message = message + "你還有%s項還沒有選擇"%(missing)
-    line_bot_api.reply_message(event.reply_token, message)    
+    lline_bot_api.reply_message(event.reply_token, TextSendMessage(message))    
         
     #print(event.message.type)
 import os
