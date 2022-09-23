@@ -54,10 +54,9 @@ def scrapping(key_word) :
             'nextOpenTime': el.xpath('div//div[contains(@class, "UaQhfb fontBodyMedium")]//div[contains(@class, "W4Efsd")]/following::div[3]//span[text()="·"]/following::span[4]/text()').extract_first()
         })
 
-    #print(results)
 
-    search_result = [a['title'] for a in results]
-    picked_result = search_result[3]
+    #search_result = [a['title'] for a in results]
+    #picked_result = search_result[3]
     #target_url = [a['link'] for a in results if a['title'] == picked_result]
     #driver.get(target_url[0])
     #to refresh the browser
@@ -66,7 +65,7 @@ def scrapping(key_word) :
     # search results of related blogs
     driver.quit()
     # return
-    return(picked_result)
+    return(results)
 print(scrapping("台北市"))
 
 # variable setting
