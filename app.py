@@ -56,7 +56,7 @@ def scrapping(key_word) :
 
 
     search_result = [a['title'] for a in results]
-    picked_result = search_result[0]
+    picked_result = search_result
     #target_url = [a['link'] for a in results if a['title'] == picked_result]
     #driver.get(target_url[0])
     #to refresh the browser
