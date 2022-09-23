@@ -16,6 +16,7 @@ import datetime
 import re
 import numpy as np
 import pandas as pd
+import os
 #import time
 
 
@@ -25,7 +26,13 @@ import pandas as pd
 def scrapping(key_word) :
     key_food = '火鍋106'
     key_place = key_word
-    driver = webdriver.Chrome(ChromeDriverManager().install())
+    # options setting
+    chrome_options = webdriver.ChromeOptions()
+    chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
+    chrome_options.add_argument("--headless")
+    chrome_options.add_argument("--disable-dev-shm-usage")
+    chrome_options.add_argument("--no-sandbox")
+    driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
     url = 'https://www.google.com/maps/search/{0}+near+{1}'.format(key_food, key_place)
     driver.get(url)
     page_content = driver.page_source
@@ -60,6 +67,7 @@ def scrapping(key_word) :
     driver.quit()
     # return
     return(picked_result)
+print(scrapping("台北市"))
 
 # variable setting
 category = ""
