@@ -55,8 +55,8 @@ def scrapping(key_word) :
         })
 
 
-    #search_result = [a['title'] for a in results]
-    #picked_result = search_result[3]
+    search_result = [a['title'] for a in results]
+    picked_result = search_result[0]
     #target_url = [a['link'] for a in results if a['title'] == picked_result]
     #driver.get(target_url[0])
     #to refresh the browser
@@ -65,7 +65,7 @@ def scrapping(key_word) :
     # search results of related blogs
     driver.quit()
     # return
-    return(results)
+    return(picked_result)
 print(scrapping("台北市"))
 
 # variable setting
