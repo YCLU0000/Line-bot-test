@@ -31,9 +31,7 @@ import os
 
 #### scrap code #####
 # search results from google map
-def scrapping(key_word) :
-    key_food = '火鍋106'
-    key_place = key_word
+def scrapping(key_food, key_place1, key_place2) :
     # options setting
     chrome_options = webdriver.ChromeOptions()
     chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
@@ -41,35 +39,42 @@ def scrapping(key_word) :
     chrome_options.add_argument("--disable-dev-shm-usage")
     chrome_options.add_argument("--no-sandbox")
     driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
-    url = 'https://www.google.com/maps/search/{0}+near+{1}'.format(key_food, key_place)
+    key_food = '錢都'
+    key_place1 = '台北市'
+    key_place2 = '中山區'
+    driver = webdriver.Chrome(ChromeDriverManager().install(), chrome_options = chrome_options)
+    url = 'https://www.google.com/maps/search/{0}+near+{1}+{2}'.format(key_food, key_place1, key_place2)
     driver.get(url)
-    page_content = driver.page_source
-    # a =  driver.find_element(By.XPATH, '//div[contains(@aria-label, "結果")]/div/div[./a]/./a').get_attribute("aria-label")
-    try: 
-        b =  driver.find_element(By.XPATH, '//div[contains(@aria-label, "Results for")]/div/div[./a]/./a').get_attribute("aria-label")
-        e =  driver.find_element(By.XPATH, '//div[contains(@aria-label, "Results for")]/div/div[./a]/./a').get_attribute("href")   
-    except:
-        b = 0
-        e = 0
-    # c =  driver.find_element(By.XPATH, '//*[@id="QA0Szd"]/div/div/div[1]/div[2]/div/div[1]/div/div/div[2]/div[1]/div[3]/div/a').get_attribute("aria-label")
-    # d = driver.find_element(By.XPATH, '//*[@id="QA0Szd"]/div/div/div[1]/div[2]/div/div[1]/div/div/div[2]/div[1]').get_attribute("aria-label")
-    try_result  = [b,e]
-    response = Selector(page_content)
 
-    results = page_content
 
-    for el in response.xpath('//div[contains(@aria-label, "的搜尋結果")]/div/div[./a]'):
+    results = []
+
+    for el in driver.find_elements(By.XPATH, '//div[contains(@aria-label, "結果")]/div/div[./a]'):
+        tep = el.find_element(By.XPATH, 'div//div[contains(@class, "UaQhfb fontBodyMedium")]//div[contains(@class, "W4Efsd")]/following::div//span[@jsan="0.aria-hidden"]/following::div').text.replace(" ","")
+        service = [a.text for a in el.find_elements(By.XPATH, './/div[contains(@class, "ah5Ghc")]')]
         results.append({
-            'link': el.xpath('./a/@href').extract_first(''),
-            'title': el.xpath('./a/@aria-label').extract_first(''),
-            #'type': el.xpath('div//div[contains(@class, "UaQhfb fontBodyMedium")]//div[contains(@class, "W4Efsd")]/following::div//span[text()="·"]/following::span/text()').extract_first(),
-            #'rating': el.xpath('div//span[contains(@aria-hidden, "true")]/text()').extract_first(''),
-            #'reviewsCount': el.xpath('div//span[contains(@aria-hidden, "true")]/following::text()').extract_first(''),
-            # 'service'
-            # response.xpath('//div[contains(@aria-label, "的搜尋結果")]/div//div[contains(@class, "UaQhfb fontBodyMedium")]').extract_first('')
-            #'address': el.xpath('div//div[contains(@class, "UaQhfb fontBodyMedium")]//div[contains(@class, "W4Efsd")]/following::div//span[@jsan="0.aria-hidden"]/following::span/text()').extract_first(),
-            #'status': el.xpath('div//div[contains(@class, "UaQhfb fontBodyMedium")]//div[contains(@class, "W4Efsd")]/following::div[3]//span[text()="·"]/following::span/text()').extract_first(),
-            #'nextOpenTime': el.xpath('div//div[contains(@class, "UaQhfb fontBodyMedium")]//div[contains(@class, "W4Efsd")]/following::div[3]//span[text()="·"]/following::span[4]/text()').extract_first()
+            'title': el.find_element(By.XPATH, './a').get_attribute('aria-label'),
+            'link': el.find_element(By.XPATH, './a').get_attribute('href'),
+            'type': el.find_element(By.XPATH, 'div//div[contains(@class, "UaQhfb fontBodyMedium")]//div[contains(@class, "W4Efsd")]/following::div//span[text()="·"]/following::span').text, 
+            'rating': el.find_elements(By.XPATH, 'div//span[contains(@aria-hidden, "true")]')[0].text,
+            'reviewsCount': el.find_elements(By.XPATH, 'div//span[contains(@aria-hidden, "true")]')[1].text.replace("(", "").replace(")",""), 
+            'service': ' '.join(service),
+           'address': el.find_element(By.XPATH, 'div//div[contains(@class, "UaQhfb fontBodyMedium")]//div[contains(@class, "W4Efsd")]/following::div//span[@jsan="0.aria-hidden"]/following::span').text,
+            'status': tep.split("⋅")[0],
+            'nextOpenTime': tep.split("⋅")[1].split("·")[0],
+            'phone': tep.split("⋅")[1].split("·")[1],
+            'website': el.find_element(By.XPATH, './/a[@data-value="網站"]').get_attribute('href')
+        })
+    search_result = [a['title'] for a in results]
+    picked_result = search_result[3]
+    
+    url = 'https://www.google.com/search?q={0}+ +食記'.format(picked_result)
+    driver.get(url)
+    blog_results = []
+    for el in driver.find_elements(By.XPATH, '//div[@class="yuRUbf"]'):
+        blog_results.append({
+            'blog_title': el.find_element(By.XPATH, 'a/h3').text,
+            'blog_link': el.find_element(By.XPATH, 'a').get_attribute('href')
         })
 
 
@@ -83,7 +88,7 @@ def scrapping(key_word) :
     # search results of related blogs
     #driver.quit()
     # return
-    return(try_result)
+    return(results)
 print(scrapping("台北市"))
 
 # variable setting
