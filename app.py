@@ -44,7 +44,8 @@ def scrapping(key_word) :
     url = 'https://www.google.com/maps/search/{0}+near+{1}'.format(key_food, key_place)
     driver.get(url)
     page_content = driver.page_source
-    a =  driver.find_element(By.XPATH, '//*[@id="QA0Szd"]/div/div/div[1]/div[2]/div/div[1]/div/div/div[2]/div[1]/div[3]/div/a').get_attribute("aria-label")
+    a =  driver.find_element(By.XPATH, '//div[contains(@aria-label, "結果")]/div/div[./a]/./a').get_attribute("aria-label")
+
 
 
     response = Selector(page_content)
