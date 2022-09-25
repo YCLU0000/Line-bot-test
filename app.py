@@ -1,3 +1,10 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sun Sep 25 19:05:21 2022
+
+@author: YC
+"""
+
 from flask import Flask, request, abort
 
 from linebot import (
@@ -38,7 +45,7 @@ def scrapping(key_word) :
     page_content = driver.page_source
     response = Selector(page_content)
 
-    results = []
+    results = page_content
 
     for el in response.xpath('//div[contains(@aria-label, "的搜尋結果")]/div/div[./a]'):
         results.append({
