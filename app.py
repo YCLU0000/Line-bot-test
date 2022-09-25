@@ -40,12 +40,12 @@ def scrapping(key_word) :
     chrome_options.add_argument("--headless")
     chrome_options.add_argument("--disable-dev-shm-usage")
     chrome_options.add_argument("--no-sandbox")
-    chrome_options.add_argument("--lang=zh-TW")
+    chrome_options.add_argument("--lang=en")        
     driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
     url = 'https://www.google.com/maps/search/{0}+near+{1}'.format(key_food, key_place)
     driver.get(url)
     page_content = driver.page_source
-    a =  driver.find_element(By.XPATH, '//div[contains(@aria-label, "的搜尋結果")]/div/div[./a]/./a').get_attribute("aria-label")
+    a =  driver.find_element(By.XPATH, '//div[contains(@aria-label, "Results for")]/div/div[./a]/./a').get_attribute("aria-label")
 
 
 
@@ -53,7 +53,7 @@ def scrapping(key_word) :
 
     results = page_content
 
-    for el in response.xpath('//div[contains(@aria-label, "的搜尋結果")]/div/div[./a]'):
+    for el in response.xpath('//div[contains(@aria-label, "Results for")]/div/div[./a]'):
         results.append({
             'link': el.xpath('./a/@href').extract_first(''),
             'title': el.xpath('./a/@aria-label').extract_first(''),
