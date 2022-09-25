@@ -46,12 +46,14 @@ def scrapping(key_word) :
     page_content = driver.page_source
     # a =  driver.find_element(By.XPATH, '//div[contains(@aria-label, "結果")]/div/div[./a]/./a').get_attribute("aria-label")
     try: 
-        b =  driver.find_element(By.XPATH, '//div[contains(@aria-label, "Results for")]/div/div[./a]/./a').get_attribute("aria-label")  
+        b =  driver.find_element(By.XPATH, '//div[contains(@aria-label, "Results for")]/div/div[./a]/./a').get_attribute("aria-label")
+        e =  driver.find_element(By.XPATH, '//div[contains(@aria-label, "Results for")]/div/div[./a]/./a').get_attribute("href")   
     except:
         b = 0
-    c =  driver.find_element(By.XPATH, '//*[@id="QA0Szd"]/div/div/div[1]/div[2]/div/div[1]/div/div/div[2]/div[1]/div[3]/div/a').get_attribute("aria-label")
-    d = driver.find_element(By.XPATH, '//*[@id="QA0Szd"]/div/div/div[1]/div[2]/div/div[1]/div/div/div[2]/div[1]').get_attribute("aria-label")
-    try_result  = [b,c,d]
+        e = 0
+    # c =  driver.find_element(By.XPATH, '//*[@id="QA0Szd"]/div/div/div[1]/div[2]/div/div[1]/div/div/div[2]/div[1]/div[3]/div/a').get_attribute("aria-label")
+    # d = driver.find_element(By.XPATH, '//*[@id="QA0Szd"]/div/div/div[1]/div[2]/div/div[1]/div/div/div[2]/div[1]').get_attribute("aria-label")
+    try_result  = [b,e]
     response = Selector(page_content)
 
     results = page_content
@@ -140,11 +142,11 @@ def handle_message(event):
             CarouselColumn(
             thumbnail_image_url = "https://www.iberdrola.com/documents/20125/39904/real_food_746x419.jpg",
             title = "這間餐廳很適合你!",#scrapping(event.message.text),
-            text = "台北市 - 梨園湯包",#scrapping(event.message.text),
+            text = scrapping("台北市")[0], #"台北市 - 梨園湯包",#scrapping(event.message.text),
             actions = [
                 URIAction(
                 label = "點這裡去Google Map!",
-                uri = "https://goo.gl/maps/nWsFPjAVzZtaFbgs5")
+                uri = scrapping("台北市")[1])#"https://goo.gl/maps/nWsFPjAVzZtaFbgs5")
             ])
         ]))
         line_bot_api.reply_message(event.reply_token, carousel_message)
