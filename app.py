@@ -154,7 +154,7 @@ def handle_message(event):
         line_bot_api.reply_message(event.reply_token, quick_message)
      # Showing results
     elif bool(re.search("給我餐廳" ,message)):
-        rest = scrapping(category, long, lat)
+        rest = scrapping(category, lat, long)
         carousel_message = TemplateSendMessage(
         alt_text = "results",
         template = CarouselTemplate(
