@@ -31,7 +31,7 @@ import os
 
 #### scrap code #####
 # search results from google map
-def scrapping(key_food = "錢都", key_place1 = "台北市", key_place2 = "ˋ中山區") :
+def scrapping(key_food = "錢都", key_place1 = "台北市", key_place2 = "中山區") :
     # options setting
     chrome_options = webdriver.ChromeOptions()
     chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
@@ -89,7 +89,7 @@ def scrapping(key_food = "錢都", key_place1 = "台北市", key_place2 = "ˋ中
     #driver.quit()
     # return
     return(results)
-print(scrapping(key_food, key_place1, key_place2))
+print(scrapping())
 
 # variable setting
 category = ""
@@ -147,11 +147,11 @@ def handle_message(event):
             CarouselColumn(
             thumbnail_image_url = "https://www.iberdrola.com/documents/20125/39904/real_food_746x419.jpg",
             title = "這間餐廳很適合你!",#scrapping(event.message.text),
-            text = scrapping(key_food, key_place1, key_place2)[0], #"台北市 - 梨園湯包",#scrapping(event.message.text),
+            text = scrapping()[0], #"台北市 - 梨園湯包",#scrapping(event.message.text),
             actions = [
                 URIAction(
                 label = "點這裡去Google Map!",
-                uri = scrapping(key_food, key_place1, key_place2)[1])#"https://goo.gl/maps/nWsFPjAVzZtaFbgs5")
+                uri = scrapping()[1])#"https://goo.gl/maps/nWsFPjAVzZtaFbgs5")
             ])
         ]))
         line_bot_api.reply_message(event.reply_token, carousel_message)
