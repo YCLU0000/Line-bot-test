@@ -161,11 +161,11 @@ def handle_message(event):
             CarouselColumn(
             thumbnail_image_url = "https://www.iberdrola.com/documents/20125/39904/real_food_746x419.jpg",
             title = "這間餐廳很適合你!",#scrapping(event.message.text),
-            text = rest[0,0], #"台北市 - 梨園湯包",#scrapping(event.message.text),
+            text = rest.iloc[0,0], #"台北市 - 梨園湯包",#scrapping(event.message.text),
             actions = [
                 URIAction(
                 label = "點這裡去Google Map!",
-                uri = rest[0,1])#"https://goo.gl/maps/nWsFPjAVzZtaFbgs5")
+                uri = rest.iloc[0,1])#"https://goo.gl/maps/nWsFPjAVzZtaFbgs5")
             ])
         ]))
         line_bot_api.reply_message(event.reply_token, carousel_message)
@@ -260,9 +260,9 @@ def handle_message(event):
         quick_reply = QuickReply(
             items = [
                 QuickReplyButton(
-                    action = PostbackAction(label = "0~5", data = "D0~5")),
+                    action = PostbackAction(label = "0~5",display_text='給我餐廳', data = "D0~5")),
                 QuickReplyButton(
-                    action = PostbackAction(label = "6~10", data = "D6~10"))
+                    action = PostbackAction(label = "6~10",display_text='給我餐廳', data = "D6~10"))
                 ])
         )
         # Sotre response
@@ -272,8 +272,6 @@ def handle_message(event):
     elif data[0] == "D" : #顯示結果
         # Sotre response
         shownumber = data[1:]
-        # text 給我餐廳
-        line_bot_api.reply_message(event.reply_token, TextSendMessage("給我餐廳"))
     # filt = ["種類", "星數", "內用/外帶", "顯示餐廳數"]
     # if data[0] == "A" :# 種類
     #     if(data == "A隨便來個"):
