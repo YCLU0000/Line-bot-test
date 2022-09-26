@@ -267,6 +267,8 @@ def handle_message(event):
         )
         # Sotre response
         takeout = data[1:]
+        # response antoher filter
+        line_bot_api.reply_message(event.reply_token, quick_message)
     elif data[0] == "D" : #顯示結果
         # Sotre response
         shownumber = data[1:]
