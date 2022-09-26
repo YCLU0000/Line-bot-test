@@ -64,7 +64,7 @@ def scrapping(key_food, key_place1, key_place2) :
             'address': el.find_element(By.XPATH, 'div//div[contains(@class, "UaQhfb fontBodyMedium")]//div[contains(@class, "W4Efsd")]/following::div//span[@jsan="0.aria-hidden"]/following::span').text,
             'status': tep.split("⋅")[0],
             'nextOpenTime': tep.split("⋅")[1].split("·")[0],
-            'phone': tep.split("⋅")[1].split("·")[1],
+            #'phone': tep.split("⋅")[1].split("·")[1],
             'website': el.find_element(By.XPATH, '//a[@data-value="Website"]').get_attribute('href')#,
             #'blog_title': driver2.find_element(By.XPATH, '//div[@class="yuRUbf"]/a/h3').text,
             #'blog_link': driver2.find_element(By.XPATH, '//div[@class="yuRUbf"]/a').get_attribute('href')    
