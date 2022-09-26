@@ -43,7 +43,16 @@ def scrapping(key_food, key_place1, key_place2) :
     driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
     url = 'https://www.google.com/maps/search/{0}/@{1},{2},14z'.format(key_food, key_place1, key_place2)
     driver.get(url)
-
+    
+    key_num = driver.find_elements(By.XPATH, '//div[contains(@aria-label, "結果")]/div')[2].get_attribute('jstcache')
+    script = '//div[@jstcache="{0}"]'.format(key_num)
+    try:
+        for i in range(5,20,3):
+            last_review = driver.find_elements(By.XPATH, '//div[@jstcache="203"]')
+            driver.execute_script('arguments[0].scrollIntoView(true);', last_review[i])
+            time.sleep(2)
+    except:
+        pass    
 
     results = []
 
