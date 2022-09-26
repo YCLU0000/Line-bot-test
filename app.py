@@ -136,6 +136,7 @@ def callback():
 def handle_message(event):
     global lat
     global long
+    global category
     message = event.message.text
     # First Filter : Food category
     # Click one action in the picture list at the bottom of line
@@ -169,6 +170,9 @@ def handle_message(event):
             ])
         ]))
         line_bot_api.reply_message(event.reply_token, carousel_message)
+        print(category)
+        print(lat)
+        print(long)
     else :
         line_bot_api.reply_message(event.reply_token, TextSendMessage("不好意思，我不明白你說的話"))
 # 處理位置資訊
