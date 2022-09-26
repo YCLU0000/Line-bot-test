@@ -59,7 +59,7 @@ def scrapping(key_food, key_place1, key_place2) :
             'rating': el.find_elements(By.XPATH, 'div//span[contains(@aria-hidden, "true")]')[0].text,
             'reviewsCount': el.find_elements(By.XPATH, 'div//span[contains(@aria-hidden, "true")]')[1].text.replace("(", "").replace(")",""), 
             'service': ' '.join(service),
-           'address': el.find_element(By.XPATH, 'div//div[contains(@class, "UaQhfb fontBodyMedium")]//div[contains(@class, "W4Efsd")]/following::div//span[@jsan="0.aria-hidden"]/following::span').text,
+            'address': el.find_element(By.XPATH, 'div//div[contains(@class, "UaQhfb fontBodyMedium")]//div[contains(@class, "W4Efsd")]/following::div//span[@jsan="0.aria-hidden"]/following::span').text,
             'status': tep.split("⋅")[0],
             'nextOpenTime': tep.split("⋅")[1].split("·")[0],
             'phone': tep.split("⋅")[1].split("·")[1],
