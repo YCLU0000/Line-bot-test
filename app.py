@@ -65,17 +65,17 @@ def scrapping(key_food = "錢都", key_place1 = "台北市", key_place2 = "中�
             'phone': tep.split("⋅")[1].split("·")[1],
             'website': el.find_element(By.XPATH, './/a[@data-value="網站"]').get_attribute('href')
         })
-    search_result = [a['title'] for a in results]
-    picked_result = search_result[3]
+    # search_result = [a['title'] for a in results]
+    # picked_result = search_result[3]
     
-    url = 'https://www.google.com/search?q={0}+ +食記'.format(picked_result)
-    driver.get(url)
-    blog_results = []
-    for el in driver.find_elements(By.XPATH, '//div[@class="yuRUbf"]'):
-        blog_results.append({
-            'blog_title': el.find_element(By.XPATH, 'a/h3').text,
-            'blog_link': el.find_element(By.XPATH, 'a').get_attribute('href')
-        })
+    # url = 'https://www.google.com/search?q={0}+ +食記'.format(picked_result)
+    # driver.get(url)
+    # blog_results = []
+    # for el in driver.find_elements(By.XPATH, '//div[@class="yuRUbf"]'):
+    #     blog_results.append({
+    #         'blog_title': el.find_element(By.XPATH, 'a/h3').text,
+    #         'blog_link': el.find_element(By.XPATH, 'a').get_attribute('href')
+    #     })
 
 
     #search_result = [a['title'] for a in results]
