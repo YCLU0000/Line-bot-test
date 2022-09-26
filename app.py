@@ -31,7 +31,7 @@ import os
 
 #### scrap code #####
 # search results from google map
-def scrapping(key_food, key_place1, key_place2) :
+def scrapping(food, place1, place2) :
     # options setting
     chrome_options = webdriver.ChromeOptions()
     chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
@@ -39,9 +39,9 @@ def scrapping(key_food, key_place1, key_place2) :
     chrome_options.add_argument("--disable-dev-shm-usage")
     chrome_options.add_argument("--no-sandbox")
     driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
-    key_food = '錢都'
-    key_place1 = '台北市'
-    key_place2 = '中山區'
+    key_food = food
+    key_place1 = place1
+    key_place2 = place2
     driver = webdriver.Chrome(ChromeDriverManager().install(), chrome_options = chrome_options)
     url = 'https://www.google.com/maps/search/{0}+near+{1}+{2}'.format(key_food, key_place1, key_place2)
     driver.get(url)
@@ -89,7 +89,7 @@ def scrapping(key_food, key_place1, key_place2) :
     #driver.quit()
     # return
     return(results)
-print(scrapping("台北市"))
+print(scrapping("錢都", "台北市","中正區"))
 
 # variable setting
 category = ""
@@ -147,11 +147,11 @@ def handle_message(event):
             CarouselColumn(
             thumbnail_image_url = "https://www.iberdrola.com/documents/20125/39904/real_food_746x419.jpg",
             title = "這間餐廳很適合你!",#scrapping(event.message.text),
-            text = scrapping("台北市")[0], #"台北市 - 梨園湯包",#scrapping(event.message.text),
+            text = scrapping("錢都", "台北市","中正區")[0], #"台北市 - 梨園湯包",#scrapping(event.message.text),
             actions = [
                 URIAction(
                 label = "點這裡去Google Map!",
-                uri = scrapping("台北市")[1])#"https://goo.gl/maps/nWsFPjAVzZtaFbgs5")
+                uri = scrapping("錢都", "台北市","中正區")[1])#"https://goo.gl/maps/nWsFPjAVzZtaFbgs5")
             ])
         ]))
         line_bot_api.reply_message(event.reply_token, carousel_message)
