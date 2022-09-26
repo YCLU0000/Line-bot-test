@@ -49,54 +49,84 @@ def scrapping(key_food, key_place1, key_place2) :
 
     for el in driver.find_elements(By.XPATH, '//div[contains(@aria-label, "Results for")]/div/div[./a]'):
         tep = el.find_element(By.XPATH, 'div//div[contains(@class, "UaQhfb fontBodyMedium")]//div[contains(@class, "W4Efsd")]/following::div//span[@jsan="0.aria-hidden"]/following::div').text.replace(" ","")
-        #driver2 = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
-        service = [a.text for a in el.find_elements(By.XPATH, './/div[contains(@class, "ah5Ghc")]')]
         title = el.find_element(By.XPATH, './a').get_attribute('aria-label')
-        #url2 = 'https://www.google.com/search?q={0}+ +食記'.format(title)
-        #driver2.get(url2)
+        link = el.find_element(By.XPATH, './a').get_attribute('href')
+        try:
+            type_ = el.find_element(By.XPATH, 'div[contains(@class, "UaQhfb fontBodyMedium")]//div[contains(@class, "W4Efsd")]/following::div//span[text()="·"]/following::span').text
+        except:
+            type_ = None
+        
+        try: 
+            rating = el.find_elements(By.XPATH, 'div//span[contains(@aria-hidden, "true")]')[0].text
+        except:
+            rating = None
+        
+        try:
+            review = el.find_elements(By.XPATH, 'div//span[contains(@aria-hidden, "true")]')[1].text.replace("(", "").replace(")","")
+        except:
+            review = None
+        
+        try:
+            service = [a.text for a in el.find_elements(By.XPATH, './/div[contains(@class, "ah5Ghc")]')]
+            service = ' '.join(service)
+        except:
+            service = None
+            
+        try:
+            address = el.find_element(By.XPATH, 'div//div[contains(@class, "UaQhfb fontBodyMedium")]//div[contains(@class, "W4Efsd")]/following::div//span[@jsan="0.aria-hidden"]/following::span').text
+        except:
+            address = None
+        
+        try: 
+            status = tep.split("⋅")[0]
+        except: 
+            status = None
+        
+        try:
+            nextOpenTime = tep.split("⋅")[1].split("·")[0]
+        except:
+            nextOpenTime = None
+        
+        try:
+            phone = tep.split("⋅")[1].split("·")[1]
+        except:
+            phone = None
+        
+        try: 
+            website = el.find_element(By.XPATH, '//a[@data-value="Website"]').get_attribute('href')
+        except:
+            website = None
+        # driver2.get(url2)
         results.append({
             'title': title,
-            'link': el.find_element(By.XPATH, './a').get_attribute('href'),
-            #'type': el.find_element(By.XPATH, 'div//div[contains(@class, "UaQhfb fontBodyMedium")]//div[contains(@class, "W4Efsd")]/following::div//span[text()="·"]/following::span').text, 
-            #'rating': el.find_elements(By.XPATH, 'div//span[contains(@aria-hidden, "true")]')[0].text,
-            #'reviewsCount': el.find_elements(By.XPATH, 'div//span[contains(@aria-hidden, "true")]')[1].text.replace("(", "").replace(")",""), 
-            #'service': ' '.join(service),
-            #'address': el.find_element(By.XPATH, 'div//div[contains(@class, "UaQhfb fontBodyMedium")]//div[contains(@class, "W4Efsd")]/following::div//span[@jsan="0.aria-hidden"]/following::span').text,
-            #'status': tep.split("⋅")[0],
-            #'nextOpenTime': tep.split("⋅")[1].split("·")[0],
-            #'phone': tep.split("⋅")[1].split("·")[1],
-            #'website': el.find_element(By.XPATH, '//a[@data-value="Website"]').get_attribute('href')#,
-            #'blog_title': driver2.find_element(By.XPATH, '//div[@class="yuRUbf"]/a/h3').text,
-            #'blog_link': driver2.find_element(By.XPATH, '//div[@class="yuRUbf"]/a').get_attribute('href')    
+            'link': link,
+            'type': type_ , 
+            'rating': rating,
+            'reviewsCount': review, 
+            'service': service,
+           'address': address,
+            'status': status,
+            'nextOpenTime': nextOpenTime,
+            'phone': phone,
+            'website': website
+      
         })
         #driver2.quit()      
+    try: 
+        for a in results:
+            url = 'https://www.google.com/search?q={0}+ +食記'.format(a['title'])
+            driver.get(url)
+            a.update({
+                'blog_title': driver.find_element(By.XPATH, '//div[@class="yuRUbf"]/a/h3').text,
+                'blog_link': driver.find_element(By.XPATH, '//div[@class="yuRUbf"]/a').get_attribute('href')
+                })
+    except:
+        pass
     df = pd.DataFrame(results)
     return(df)
 print(scrapping("錢都", 25.0594522, 121.5531985))
 
-# search_result = [a['title'] for a in results]
-    # picked_result = search_result[3]
-    
-    # url = 'https://www.google.com/search?q={0}+ +食記'.format(picked_result)
-    # driver.get(url)
-    # blog_results = []
-    # for el in driver.find_elements(By.XPATH, '//div[@class="yuRUbf"]'):
-    #     blog_results.append({
-    #         'blog_title': el.find_element(By.XPATH, 'a/h3').text,
-    #         'blog_link': el.find_element(By.XPATH, 'a').get_attribute('href')
-    #     })
 
-
-    #search_result = [a['title'] for a in results]
-    #picked_result = search_result
-    #target_url = [a['link'] for a in results if a['title'] == picked_result]
-    #driver.get(target_url[0])
-    #to refresh the browser
-    #driver.refresh()
-
-    # search results of related blogs
-    #driver.quit()
-    # return
 
 
 # variable setting
@@ -180,9 +210,9 @@ def handle_message(event):
 # 處理位置資訊
 @handler.add(MessageEvent, message=LocationMessage)
 def handle_message(event):
-    global address = event.message.address # 住址
-    global lat = event.message.latitude # latitude
-    global long = event.message.longitude # longitude
+    address = event.message.address # 住址
+    lat = event.message.latitude # latitude
+    long = event.message.longitude # longitude
     quick_message = TextSendMessage(
         text = "請問你想要吃甚麼種類:",
         quick_reply = QuickReply(
