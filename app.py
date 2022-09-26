@@ -31,7 +31,7 @@ import os
 
 #### scrap code #####
 # search results from google map
-def scrapping(key_food = "錢都", key_place1 = "台北市", key_place2 = "中山區") :
+def scrapping(key_food, key_place1, key_place2) :
     # options setting
     chrome_options = webdriver.ChromeOptions()
     chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
@@ -39,17 +39,13 @@ def scrapping(key_food = "錢都", key_place1 = "台北市", key_place2 = "中�
     chrome_options.add_argument("--disable-dev-shm-usage")
     chrome_options.add_argument("--no-sandbox")
     driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
-    #key_food = '錢都'
-    #key_place1 = '台北市'
-    #key_place2 = '中山區'
-    driver = webdriver.Chrome(ChromeDriverManager().install(), chrome_options = chrome_options)
     url = 'https://www.google.com/maps/search/{0}+near+{1}+{2}'.format(key_food, key_place1, key_place2)
     driver.get(url)
 
 
     results = []
 
-    for el in driver.find_elements(By.XPATH, '//div[contains(@aria-label, "結果")]/div/div[./a]'):
+    for el in driver.find_elements(By.XPATH, '//div[contains(@aria-label, "Results for")]/div/div[./a]'):
         tep = el.find_element(By.XPATH, 'div//div[contains(@class, "UaQhfb fontBodyMedium")]//div[contains(@class, "W4Efsd")]/following::div//span[@jsan="0.aria-hidden"]/following::div').text.replace(" ","")
         service = [a.text for a in el.find_elements(By.XPATH, './/div[contains(@class, "ah5Ghc")]')]
         results.append({
@@ -63,9 +59,12 @@ def scrapping(key_food = "錢都", key_place1 = "台北市", key_place2 = "中�
             'status': tep.split("⋅")[0],
             'nextOpenTime': tep.split("⋅")[1].split("·")[0],
             'phone': tep.split("⋅")[1].split("·")[1],
-            'website': el.find_element(By.XPATH, './/a[@data-value="網站"]').get_attribute('href')
+            'website': el.find_element(By.XPATH, './/a[@data-value="Website"]').get_attribute('href')
         })
-    # search_result = [a['title'] for a in results]
+    return(results)
+print(scrapping("錢都", "台北市", "中山區"))
+
+# search_result = [a['title'] for a in results]
     # picked_result = search_result[3]
     
     # url = 'https://www.google.com/search?q={0}+ +食記'.format(picked_result)
@@ -88,8 +87,7 @@ def scrapping(key_food = "錢都", key_place1 = "台北市", key_place2 = "中�
     # search results of related blogs
     #driver.quit()
     # return
-    return(results)
-print(scrapping())
+
 
 # variable setting
 category = ""
