@@ -65,11 +65,17 @@ def scrapping(key_food, key_place1, key_place2) :
             'status': tep.split("⋅")[0],
             'nextOpenTime': tep.split("⋅")[1].split("·")[0],
             'phone': tep.split("⋅")[1].split("·")[1],
-            'website': el.find_element(By.XPATH, '//a[@data-value="Website"]').get_attribute('href')#,
-            #'blog_title': driver2.find_element(By.XPATH, '//div[@class="yuRUbf"]/a/h3').text,
-            #'blog_link': driver2.find_element(By.XPATH, '//div[@class="yuRUbf"]/a').get_attribute('href')    
+            'website': el.find_element(By.XPATH, '//a[@data-value="Website"]').get_attribute('href')   
         })
         #driver2.quit()      
+    for a in results:
+        url = 'https://www.google.com/search?q={0}+ +食記'.format(a['title'])
+        driver.get(url)
+        a.update({
+            'blog_title': driver.find_element(By.XPATH, '//div[@class="yuRUbf"]/a/h3').text,
+            'blog_link': driver.find_element(By.XPATH, '//div[@class="yuRUbf"]/a').get_attribute('href')
+            })
+     
     df = pd.DataFrame(results)
     return(df)
 print(scrapping("錢都", 25.0594522, 121.5531985))
@@ -134,19 +140,16 @@ def callback():
 # 處理訊息
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    global category
-    global star
-    global takeout
-    global shownumber
-    global lat
-    global long
-    global category
+    
     message = event.message.text
     # First Filter : Food category
     # Click one action in the picture list at the bottom of line
     if bool(re.search("讓我選|再一次|來個驚喜|美食排行榜", message)):
         # reset answer
-        
+        global category
+        global star
+        global takeout
+        global shownumber
         category, star, takeout, shownumber = "", "", "", ""
         quick_message = TextSendMessage(
         text = "請分享你現在的位置給我 :",
@@ -155,7 +158,9 @@ def handle_message(event):
         line_bot_api.reply_message(event.reply_token, quick_message)
      # Showing results
     elif bool(re.search("給我餐廳" ,message)):
-        
+        global lat
+        global long
+        global category
         rest = scrapping(category, lat, long)
         carousel_message = TemplateSendMessage(
         alt_text = "results",
