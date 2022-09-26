@@ -134,9 +134,7 @@ def callback():
 # 處理訊息
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    global lat
-    global long
-    global category
+    
     message = event.message.text
     # First Filter : Food category
     # Click one action in the picture list at the bottom of line
@@ -154,6 +152,9 @@ def handle_message(event):
         line_bot_api.reply_message(event.reply_token, quick_message)
      # Showing results
     elif bool(re.search("給我餐廳" ,message)):
+        global lat
+        global long
+        global category
         rest = scrapping(category, lat, long)
         carousel_message = TemplateSendMessage(
         alt_text = "results",
