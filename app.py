@@ -180,9 +180,9 @@ def handle_message(event):
 # 處理位置資訊
 @handler.add(MessageEvent, message=LocationMessage)
 def handle_message(event):
-    address = event.message.address # 住址
-    lat = event.message.latitude # latitude
-    long = event.message.longitude # longitude
+    global address = event.message.address # 住址
+    global lat = event.message.latitude # latitude
+    global long = event.message.longitude # longitude
     quick_message = TextSendMessage(
         text = "請問你想要吃甚麼種類:",
         quick_reply = QuickReply(
