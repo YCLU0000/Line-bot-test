@@ -47,11 +47,11 @@ def scrapping(key_food, key_place1, key_place2) :
 
     for el in driver.find_elements(By.XPATH, '//div[contains(@aria-label, "Results for")]/div/div[./a]'):
         tep = el.find_element(By.XPATH, 'div//div[contains(@class, "UaQhfb fontBodyMedium")]//div[contains(@class, "W4Efsd")]/following::div//span[@jsan="0.aria-hidden"]/following::div').text.replace(" ","")
-        driver2 = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
+        #driver2 = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
         service = [a.text for a in el.find_elements(By.XPATH, './/div[contains(@class, "ah5Ghc")]')]
         title = el.find_element(By.XPATH, './a').get_attribute('aria-label')
-        url2 = 'https://www.google.com/search?q={0}+ +食記'.format(title)
-        driver2.get(url2)
+        #url2 = 'https://www.google.com/search?q={0}+ +食記'.format(title)
+        #driver2.get(url2)
         results.append({
             'title': title,
             'link': el.find_element(By.XPATH, './a').get_attribute('href'),
@@ -63,11 +63,11 @@ def scrapping(key_food, key_place1, key_place2) :
             'status': tep.split("⋅")[0],
             'nextOpenTime': tep.split("⋅")[1].split("·")[0],
             'phone': tep.split("⋅")[1].split("·")[1],
-            'website': el.find_element(By.XPATH, '//a[@data-value="Website"]').get_attribute('href'),
-            'blog_title': driver2.find_element(By.XPATH, '//div[@class="yuRUbf"]/a/h3').text,
-            'blog_link': driver2.find_element(By.XPATH, '//div[@class="yuRUbf"]/a').get_attribute('href')    
+            'website': el.find_element(By.XPATH, '//a[@data-value="Website"]').get_attribute('href')#,
+            #'blog_title': driver2.find_element(By.XPATH, '//div[@class="yuRUbf"]/a/h3').text,
+            #'blog_link': driver2.find_element(By.XPATH, '//div[@class="yuRUbf"]/a').get_attribute('href')    
         })
-        driver2.quit()      
+        #driver2.quit()      
     df = pd.DataFrame(results)
     return(df)
 print(scrapping("錢都", 25.0594522, 121.5531985))
