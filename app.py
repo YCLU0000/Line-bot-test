@@ -47,6 +47,7 @@ def scrapping(key_food, key_place1, key_place2) :
 
     for el in driver.find_elements(By.XPATH, '//div[contains(@aria-label, "Results for")]/div/div[./a]'):
         tep = el.find_element(By.XPATH, 'div//div[contains(@class, "UaQhfb fontBodyMedium")]//div[contains(@class, "W4Efsd")]/following::div//span[@jsan="0.aria-hidden"]/following::div').text.replace(" ","")
+        driver2 = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
         service = [a.text for a in el.find_elements(By.XPATH, './/div[contains(@class, "ah5Ghc")]')]
         title = el.find_element(By.XPATH, './a').get_attribute('aria-label')
         url2 = 'https://www.google.com/search?q={0}+ +食記'.format(title)
