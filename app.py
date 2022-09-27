@@ -2,7 +2,7 @@
 """
 Created on Sun Sep 25 19:05:21 2022
 
-@author: YC David
+@author: YC
 """
 
 from flask import Flask, request, abort
@@ -26,6 +26,7 @@ import numpy as np
 import pandas as pd
 import os
 import random
+from flex import multi_flex
 #import time
 
 
@@ -323,21 +324,24 @@ def handle_message(event):
         shownumber = data[1:]
         # Show results
         rest = scrapping(category, lat, long)
-        carousel_message = TemplateSendMessage(
-        alt_text = "results",
-        template = CarouselTemplate(
-        columns=[
-            CarouselColumn(
-            thumbnail_image_url = "https://www.iberdrola.com/documents/20125/39904/real_food_746x419.jpg",
-            title = "這間餐廳很適合你!",#scrapping(event.message.text),
-            text = rest.iloc[0,0], #"台北市 - 梨園湯包",#scrapping(event.message.text),
-            actions = [
-                URIAction(
-                label = "點這裡去Google Map!",
-                uri = rest.iloc[0,1])#"https://goo.gl/maps/nWsFPjAVzZtaFbgs5")
-            ])
-        ]))
-        line_bot_api.reply_message(event.reply_token, carousel_message)
+        # carousel_message = TemplateSendMessage(
+        # alt_text = "results",
+        # template = CarouselTemplate(
+        # columns=[
+        #     CarouselColumn(
+        #     thumbnail_image_url = "https://www.iberdrola.com/documents/20125/39904/real_food_746x419.jpg",
+        #     title = "這間餐廳很適合你!",#scrapping(event.message.text),
+        #     text = rest.iloc[0,0], #"台北市 - 梨園湯包",#scrapping(event.message.text),
+        #     actions = [
+        #         URIAction(
+        #         label = "點這裡去Google Map!",
+        #         uri = rest.iloc[0,1])#"https://goo.gl/maps/nWsFPjAVzZtaFbgs5")
+        #     ])
+        # ]))
+        flex_message = FlexSendMessage(
+            alt_text = "results",
+            contents = multi_flex(rest))
+        line_bot_api.reply_message(event.reply_token, flex_message)
         print(category)
         print(lat)
         print(long)
