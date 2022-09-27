@@ -345,6 +345,7 @@ def handle_message(event):
         print(category)
         print(lat)
         print(long)
+        print(multi_flex(rest))
         
         
     # filt = ["種類", "星數", "內用/外帶", "顯示餐廳數"]
