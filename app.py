@@ -309,16 +309,15 @@ def handle_message(event):
         quick_reply = QuickReply(
             items = [
                 QuickReplyButton(
-                    action = PostbackAction(label = "0~5", data = "D0~5")),
+                    action = PostbackAction(label = "0~5", display_text = "請稍等...", data = "D0~5", text = "請稍等", fill_in_text="請稍等...")),
                 QuickReplyButton(
-                    action = PostbackAction(label = "6~10", data = "D6~10"))
+                    action = PostbackAction(label = "6~10", display_text = "請稍等...", data = "D6~10", text = "請稍等", fill_in_text="請稍等..."))
                 ])
         )
         # Sotre response
         takeout = data[1:]
         # response antoher filter
         line_bot_api.reply_message(event.reply_token, quick_message)
-        line_bot_api.reply_message(event.reply_token, TextSendMessage("請稍等...."))
     elif data[0] == "D" : #顯示結果
         # Sotre response
         shownumber = data[1:]
