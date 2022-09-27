@@ -830,17 +830,7 @@ def multi_flex(df) :
 }
   ]
 }
-    store = {
-    "title": ["Mike", "Sherry", "Cindy", "John","David"],
-    "link": [80, 75, 93, 86,99],
-    "rating": [1, 2, 2, 3,4.5],
-    "address": ["","","","",""],
-    "nextOpenTime": ["","","","",""]
-}
-    df1 = pd.DataFrame(store)
-    flexmessage = multi_flex(df1)
-    return(flexmessage)
-
+    return(content)
 if __name__ == "__main__":
     store = {
     "title": ["Mike", "Sherry", "Cindy", "John","David"],
