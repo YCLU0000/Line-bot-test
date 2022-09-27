@@ -213,28 +213,6 @@ def handle_message(event):
         quick_reply = QuickReply(items = [QuickReplyButton(action=LocationAction(label="傳送位置"))])
         )
         line_bot_api.reply_message(event.reply_token, quick_message)
-     # Showing results
-    elif bool(re.search("給我餐廳" ,message)):
-        
-        rest = scrapping(category, lat, long)
-        carousel_message = TemplateSendMessage(
-        alt_text = "results",
-        template = CarouselTemplate(
-        columns=[
-            CarouselColumn(
-            thumbnail_image_url = "https://www.iberdrola.com/documents/20125/39904/real_food_746x419.jpg",
-            title = "這間餐廳很適合你!",#scrapping(event.message.text),
-            text = rest.iloc[0,0], #"台北市 - 梨園湯包",#scrapping(event.message.text),
-            actions = [
-                URIAction(
-                label = "點這裡去Google Map!",
-                uri = rest.iloc[0,1])#"https://goo.gl/maps/nWsFPjAVzZtaFbgs5")
-            ])
-        ]))
-        line_bot_api.reply_message(event.reply_token, carousel_message)
-        print(category)
-        print(lat)
-        print(long)
     else :
         line_bot_api.reply_message(event.reply_token, TextSendMessage("不好意思，我不明白你說的話"))
 # 處理位置資訊
@@ -281,6 +259,8 @@ def handle_message(event):
     global takeout
     global shownumber
     global default_cate
+    global lat
+    global long
     # set random number for random choice
     n_max = len(default_cate)
     ran_n = random.randint(0, n_max-1)
@@ -329,18 +309,41 @@ def handle_message(event):
         quick_reply = QuickReply(
             items = [
                 QuickReplyButton(
-                    action = PostbackAction(label = "0~5",display_text='給我餐廳', data = "D0~5")),
+                    action = PostbackAction(label = "0~5", data = "D0~5")),
                 QuickReplyButton(
-                    action = PostbackAction(label = "6~10",display_text='給我餐廳', data = "D6~10"))
+                    action = PostbackAction(label = "6~10", data = "D6~10"))
                 ])
         )
         # Sotre response
         takeout = data[1:]
         # response antoher filter
         line_bot_api.reply_message(event.reply_token, quick_message)
+        line_bot_api.reply_message(event.reply_token, TextSendMessage("請稍等...."))
     elif data[0] == "D" : #顯示結果
         # Sotre response
         shownumber = data[1:]
+        # Show results
+        rest = scrapping(category, lat, long)
+        carousel_message = TemplateSendMessage(
+        alt_text = "results",
+        template = CarouselTemplate(
+        columns=[
+            CarouselColumn(
+            thumbnail_image_url = "https://www.iberdrola.com/documents/20125/39904/real_food_746x419.jpg",
+            title = "這間餐廳很適合你!",#scrapping(event.message.text),
+            text = rest.iloc[0,0], #"台北市 - 梨園湯包",#scrapping(event.message.text),
+            actions = [
+                URIAction(
+                label = "點這裡去Google Map!",
+                uri = rest.iloc[0,1])#"https://goo.gl/maps/nWsFPjAVzZtaFbgs5")
+            ])
+        ]))
+        line_bot_api.reply_message(event.reply_token, carousel_message)
+        print(category)
+        print(lat)
+        print(long)
+        
+        
     # filt = ["種類", "星數", "內用/外帶", "顯示餐廳數"]
     # if data[0] == "A" :# 種類
     #     if(data == "A隨便來個"):
