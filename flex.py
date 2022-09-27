@@ -192,8 +192,8 @@ def multi_flex(df) :
         "height": "sm",
         "action": {
           "type": "uri",
-          "label": "",
-          "uri": "https://linecorp.com"
+          "label": "Link",
+          "uri": store1[1]
         }
       },
       {
