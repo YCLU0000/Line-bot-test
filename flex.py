@@ -14,7 +14,6 @@ def multi_flex(df) :
     store4 = [df.loc[3,"title"], df.loc[3,"link"],float(df.loc[3,"rating"]),df.loc[3,"address"],df.loc[3,"nextOpenTime"]]
     store5 = [df.loc[4,"title"], df.loc[4,"link"],float(df.loc[4,"rating"]),df.loc[4,"address"],df.loc[4,"nextOpenTime"]]
     
-    print([store1, store2, store3, store4, store5])
     # one star
     star1 = ["https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png",
              "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gray_star_28.png",
