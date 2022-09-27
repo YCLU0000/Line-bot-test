@@ -44,7 +44,7 @@ def scrapping(key_food, key_place1, key_place2) :
     url = 'https://www.google.com/maps/search/{0}/@{1},{2},14z'.format(key_food, key_place1, key_place2)
     driver.get(url)
     
-    key_num = driver.find_elements(By.XPATH, '//div[contains(@aria-label, "結果")]/div')[2].get_attribute('jstcache')
+    key_num = driver.find_elements(By.XPATH, '//div[contains(@aria-label, "Results for")]/div')[2].get_attribute('jstcache')
     script = '//div[@jstcache="{0}"]'.format(key_num)
     try:
         for i in range(5,20,3):
