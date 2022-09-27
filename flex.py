@@ -8,11 +8,11 @@ Created on Tue Sep 27 21:47:22 2022
 
 def multi_flex(df) :
     # select name, link , star, address, opentime
-    store1 = [df.loc[0,"title"], df.loc[0,"link"],df.loc[0,"rating"],df.loc[0,"address"],df.loc[0,"nextOpenTime"]]
-    store2 = [df.loc[1,"title"], df.loc[1,"link"],df.loc[1,"rating"],df.loc[1,"address"],df.loc[1,"nextOpenTime"]]
-    store3 = [df.loc[2,"title"], df.loc[2,"link"],df.loc[2,"rating"],df.loc[2,"address"],df.loc[2,"nextOpenTime"]]
-    store4 = [df.loc[3,"title"], df.loc[3,"link"],df.loc[3,"rating"],df.loc[3,"address"],df.loc[3,"nextOpenTime"]]
-    store5 = [df.loc[4,"title"], df.loc[4,"link"],df.loc[4,"rating"],df.loc[4,"address"],df.loc[4,"nextOpenTime"]]
+    store1 = [df.loc[0,"title"], df.loc[0,"link"],float(df.loc[0,"rating"]),df.loc[0,"address"],df.loc[0,"nextOpenTime"]]
+    store2 = [df.loc[1,"title"], df.loc[1,"link"],float(df.loc[1,"rating"]),df.loc[1,"address"],df.loc[1,"nextOpenTime"]]
+    store3 = [df.loc[2,"title"], df.loc[2,"link"],float(df.loc[2,"rating"]),df.loc[2,"address"],df.loc[2,"nextOpenTime"]]
+    store4 = [df.loc[3,"title"], df.loc[3,"link"],float(df.loc[3,"rating"]),df.loc[3,"address"],df.loc[3,"nextOpenTime"]]
+    store5 = [df.loc[4,"title"], df.loc[4,"link"],float(df.loc[4,"rating"]),df.loc[4,"address"],df.loc[4,"nextOpenTime"]]
     
     # one star
     star1 = ["https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png",
