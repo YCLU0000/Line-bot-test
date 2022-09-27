@@ -47,11 +47,11 @@ def multi_flex(df) :
     star_list = [star1, star2, star3, star4, star5]
     
     # change star list
-    store1.append(star_list[round(store1[2])])
-    store2.append(star_list[round(store2[2])])
-    store3.append(star_list[round(store3[2])])
-    store4.append(star_list[round(store4[2])])
-    store5.append(star_list[round(store5[2])])
+    store1.append(star_list[round(store1[2])-1])
+    store2.append(star_list[round(store2[2])-1])
+    store3.append(star_list[round(store3[2])-1])
+    store4.append(star_list[round(store4[2])-1])
+    store5.append(star_list[round(store5[2])-1])
     
     # append acutual star
     store1[len(store1) - 1].append(store1[2])
