@@ -7,12 +7,12 @@ Created on Tue Sep 27 21:47:22 2022
 import pandas as pd
 
 def multi_flex(df) :
-    # select name, link , star, address, opentime, offcial website
-    store1 = [df.loc[0,"title"], df.loc[0,"link"],float(df.loc[0,"rating"]),df.loc[0,"address"],df.loc[0,"nextOpenTime"], df.loc[0, "phone"]]
-    store2 = [df.loc[1,"title"], df.loc[1,"link"],float(df.loc[1,"rating"]),df.loc[1,"address"],df.loc[1,"nextOpenTime"], df.loc[1, "phone"]]
-    store3 = [df.loc[2,"title"], df.loc[2,"link"],float(df.loc[2,"rating"]),df.loc[2,"address"],df.loc[2,"nextOpenTime"], df.loc[2, "phone"]]
-    store4 = [df.loc[3,"title"], df.loc[3,"link"],float(df.loc[3,"rating"]),df.loc[3,"address"],df.loc[3,"nextOpenTime"], df.loc[3, "phone"]]
-    store5 = [df.loc[4,"title"], df.loc[4,"link"],float(df.loc[4,"rating"]),df.loc[4,"address"],df.loc[4,"nextOpenTime"], df.loc[4, "phone"]]
+    # select name, link , star, address, opentime, blog
+    store1 = [df.loc[0,"title"], df.loc[0,"link"],float(df.loc[0,"rating"]),df.loc[0,"address"],df.loc[0,"nextOpenTime"], df.loc[0, "blog_link"]]
+    store2 = [df.loc[1,"title"], df.loc[1,"link"],float(df.loc[1,"rating"]),df.loc[1,"address"],df.loc[1,"nextOpenTime"], df.loc[1, "blog_link"]]
+    store3 = [df.loc[2,"title"], df.loc[2,"link"],float(df.loc[2,"rating"]),df.loc[2,"address"],df.loc[2,"nextOpenTime"], df.loc[2, "blog_link"]]
+    store4 = [df.loc[3,"title"], df.loc[3,"link"],float(df.loc[3,"rating"]),df.loc[3,"address"],df.loc[3,"nextOpenTime"], df.loc[3, "blog_link"]]
+    store5 = [df.loc[4,"title"], df.loc[4,"link"],float(df.loc[4,"rating"]),df.loc[4,"address"],df.loc[4,"nextOpenTime"], df.loc[4, "blog_link"]]
     
     # one star
     star1 = ["https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png",
@@ -81,7 +81,7 @@ def multi_flex(df) :
     "aspectMode": "cover",
     "action": {
       "type": "uri",
-      "uri": store1[5]
+      "uri": store1[1]
     }
   },
   "body": {
@@ -131,7 +131,7 @@ def multi_flex(df) :
             "color": "#999999",
             "margin": "md",
             "flex": 0
-          }
+          },
         ]
       },
       {
@@ -208,9 +208,9 @@ def multi_flex(df) :
         "style": "link",
         "height": "sm",
         "action": {
-          "type": "message",
-          "label": "電話",
-          "text": store1[5]
+          "type": "uri",
+          "label": "食記",
+          "uri": store1[5]
         }
       },
       {
@@ -234,7 +234,7 @@ def multi_flex(df) :
     "aspectMode": "cover",
     "action": {
       "type": "uri",
-      "uri": store2[5]
+      "uri": store2[1]
     }
   },
   "body": {
@@ -361,9 +361,9 @@ def multi_flex(df) :
         "style": "link",
         "height": "sm",
         "action": {
-          "type": "message",
-          "label": "電話",
-          "text": store2[5]
+          "type": "uri",
+          "label": "食記",
+          "uri": store2[5]
         }
       },
       {
@@ -387,7 +387,7 @@ def multi_flex(df) :
     "aspectMode": "cover",
     "action": {
       "type": "uri",
-      "uri": store3[5]
+      "uri": store3[1]
     }
   },
   "body": {
@@ -514,9 +514,9 @@ def multi_flex(df) :
         "style": "link",
         "height": "sm",
         "action": {
-          "type": "message",
-          "label": "電話",
-          "text": store3[5]
+          "type": "uri",
+          "label": "食記",
+          "uri": store3[5]
         }
       },
       {
@@ -540,7 +540,7 @@ def multi_flex(df) :
     "aspectMode": "cover",
     "action": {
       "type": "uri",
-      "uri": store4[5]
+      "uri": store4[1]
     }
   },
   "body": {
@@ -667,9 +667,9 @@ def multi_flex(df) :
         "style": "link",
         "height": "sm",
         "action": {
-          "type": "message",
-          "label": "電話",
-          "text": store4[5]
+          "type": "uri",
+          "label": "食記",
+          "uri": store4[5]
         }
       },
       {
@@ -693,7 +693,7 @@ def multi_flex(df) :
     "aspectMode": "cover",
     "action": {
       "type": "uri",
-      "uri": store5[5]
+      "uri": store5[1]
     }
   },
   "body": {
@@ -820,9 +820,9 @@ def multi_flex(df) :
         "style": "link",
         "height": "sm",
         "action": {
-          "type": "message",
-          "label": "電話",
-          "text": store5[5]
+          "type": "uri",
+          "label": "食記",
+          "uri": store5[5]
         }
       },
       {
