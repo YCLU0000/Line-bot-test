@@ -343,26 +343,36 @@ def handle_message(event):
                 alt_text = "results",
                 template=ImageCarouselTemplate(
                 columns=[
-                    URIAction(
-                        label='選我選我',
-                        uri= rest.loc[0, "link"]
-                    ),
-                    URIAction(
-                        label='意想不到的驚喜',
-                        uri= rest.loc[1, "link"]
-                    ),
-                    URIAction(
-                        label='好膽你就來',
-                        uri= rest.loc[2, "link"]
-                    ),
-                    URIAction(
-                        label='何不問問神奇海螺',
-                        uri= rest.loc[3, "link"]
-                    ),
-                    URIAction(
-                        label='錯過會後悔',
-                        uri= rest.loc[4, "link"]
-                    )
+                    ImageCarouselColumn(
+                        image_url = poker_url_1,
+                        action = URIAction(
+                            label='選我選我',
+                            uri= rest.loc[0, "link"]
+                        )),
+                    ImageCarouselColumn(
+                        image_url = poker_url_2,
+                        action = URIAction(
+                            label='意想不到的驚喜',
+                            uri= rest.loc[1, "link"]
+                        )),
+                    ImageCarouselColumn(
+                        image_url = poker_url_2,
+                        action = URIAction(
+                            label='好膽你就來',
+                            uri= rest.loc[2, "link"]
+                        )),
+                    ImageCarouselColumn(
+                        image_url = poker_url_2,
+                        action = URIAction(
+                            label='何不問問神奇海螺',
+                            uri= rest.loc[3, "link"]
+                        )),
+                    ImageCarouselColumn(
+                        image_url = poker_url_2,
+                        action = URIAction(
+                            label='錯過會後悔',
+                            uri= rest.loc[4, "link"]
+                        ))
                     ]
                 )
                 )
