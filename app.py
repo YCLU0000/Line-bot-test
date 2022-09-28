@@ -167,6 +167,8 @@ takeout = ""
 shownumber = ""
 lat = ""
 long = ""
+fun = ""
+rest = ""
 default_cate = ["中式料理","日式料理","韓式料理","速食店","素食","飲料","飲料","咖啡廳","甜點","港式飲茶"]
 #### app
 app = Flask(__name__)
@@ -202,12 +204,13 @@ def handle_message(event):
     global lat
     global long
     global category
+    global fun
     message = event.message.text
     # First Filter : Food category
     # Click one action in the picture list at the bottom of line
-    if bool(re.search("讓我選|再一次|來個驚喜|美食排行榜", message)):
+    if bool(re.search("讓我選|來個驚喜", message)):
         # reset answer
-        
+        fun = event.message.text
         category, star, takeout, shownumber = "", "", "", ""
         quick_message = TextSendMessage(
         text = "請分享你現在的位置給我 :",
@@ -262,6 +265,8 @@ def handle_message(event):
     global default_cate
     global lat
     global long
+    global fun
+    global rest
     # set random number for random choice
     n_max = len(default_cate)
     ran_n = random.randint(0, n_max-1)
@@ -324,29 +329,49 @@ def handle_message(event):
         shownumber = data[1:]
         # Show results
         rest = scrapping(category, lat, long)
-        print(rest)
-        # carousel_message = TemplateSendMessage(
-        # alt_text = "results",
-        # template = CarouselTemplate(
-        # columns=[
-        #     CarouselColumn(
-        #     thumbnail_image_url = "https://www.iberdrola.com/documents/20125/39904/real_food_746x419.jpg",
-        #     title = "這間餐廳很適合你!",#scrapping(event.message.text),
-        #     text = rest.iloc[0,0], #"台北市 - 梨園湯包",#scrapping(event.message.text),
-        #     actions = [
-        #         URIAction(
-        #         label = "點這裡去Google Map!",
-        #         uri = rest.iloc[0,1])#"https://goo.gl/maps/nWsFPjAVzZtaFbgs5")
-        #     ])
-        # ]))
-        flex_message = FlexSendMessage(
-            alt_text = "results",
-            contents = multi_flex(rest))
-        line_bot_api.reply_message(event.reply_token, flex_message)
+        if fun == "讓我選" :
+            flex_message = FlexSendMessage(
+                alt_text = "results",
+                contents = multi_flex(rest))
+            line_bot_api.reply_message(event.reply_token, flex_message)
+            print(fun)
+        elif fun == '來個驚喜' :
+            poker_url_1 = "https://images.squarespace-cdn.com/content/v1/5abd8db4620b85fa99f15131/1542340370193-2M2GEBIZH1EOVZWXAL2R/Card+Back+2.0+-+Poker+Size+-+Blue_shw.png"
+            poker_url_2 = "https://boardgames-bg.com/images/thumbnails/1001/1000/detailed/24/bicycle-prestige-100-plastic-poker-playing-card-deck-red-raider-back-usp1018425r-board-game-24268_yde4-zm.png"
+            poker_url_2 = "https://i.pinimg.com/originals/8d/81/0e/8d810ebc5f83549e0dfc9caf65f12c60.png"
+            image_message = TemplateSendMessage(
+                alt_text = "results",
+                template=ImageCarouselTemplate(
+                columns=[
+                    URIAction(
+                        label='選我選我',
+                        uri= rest.loc[0, "link"]
+                    ),
+                    URIAction(
+                        label='意想不到的驚喜',
+                        uri= rest.loc[1, "link"]
+                    ),
+                    URIAction(
+                        label='好膽你就來',
+                        uri= rest.loc[2, "link"]
+                    ),
+                    URIAction(
+                        label='何不問問神奇海螺',
+                        uri= rest.loc[3, "link"]
+                    ),
+                    URIAction(
+                        label='錯過會後悔',
+                        uri= rest.loc[4, "link"]
+                    )
+                    ]
+                )
+                )
+            line_bot_api.reply_message(event.reply_token, image_message)
         print(category)
         print(lat)
         print(long)
-        print(multi_flex(rest))
+        print(fun)
+        
         
         
     # filt = ["種類", "星數", "內用/外帶", "顯示餐廳數"]
