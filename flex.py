@@ -210,7 +210,7 @@ def multi_flex(df) :
         "action": {
           "type": "uri",
           "label": "官方網站",
-          "uri": store[5]
+          "uri": store1[5]
         }
       },
       {
