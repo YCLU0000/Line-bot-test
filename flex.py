@@ -2,17 +2,17 @@
 """
 Created on Tue Sep 27 21:47:22 2022
 
-@author: user
+@author: David Tsai
 """
 import pandas as pd
 
 def multi_flex(df) :
-    # select name, link , star, address, opentime
-    store1 = [df.loc[0,"title"], df.loc[0,"link"],float(df.loc[0,"rating"]),df.loc[0,"address"],df.loc[0,"nextOpenTime"]]
-    store2 = [df.loc[1,"title"], df.loc[1,"link"],float(df.loc[1,"rating"]),df.loc[1,"address"],df.loc[1,"nextOpenTime"]]
-    store3 = [df.loc[2,"title"], df.loc[2,"link"],float(df.loc[2,"rating"]),df.loc[2,"address"],df.loc[2,"nextOpenTime"]]
-    store4 = [df.loc[3,"title"], df.loc[3,"link"],float(df.loc[3,"rating"]),df.loc[3,"address"],df.loc[3,"nextOpenTime"]]
-    store5 = [df.loc[4,"title"], df.loc[4,"link"],float(df.loc[4,"rating"]),df.loc[4,"address"],df.loc[4,"nextOpenTime"]]
+    # select name, link , star, address, opentime, offcial website
+    store1 = [df.loc[0,"title"], df.loc[0,"link"],float(df.loc[0,"rating"]),df.loc[0,"address"],df.loc[0,"nextOpenTime"], df.loc[0, "website"]]
+    store2 = [df.loc[1,"title"], df.loc[1,"link"],float(df.loc[1,"rating"]),df.loc[1,"address"],df.loc[1,"nextOpenTime"], df.loc[1, "website"]]
+    store3 = [df.loc[2,"title"], df.loc[2,"link"],float(df.loc[2,"rating"]),df.loc[2,"address"],df.loc[2,"nextOpenTime"], df.loc[2, "website"]]
+    store4 = [df.loc[3,"title"], df.loc[3,"link"],float(df.loc[3,"rating"]),df.loc[3,"address"],df.loc[3,"nextOpenTime"], df.loc[3, "website"]]
+    store5 = [df.loc[4,"title"], df.loc[4,"link"],float(df.loc[4,"rating"]),df.loc[4,"address"],df.loc[4,"nextOpenTime"], df.loc[4, "website"]]
     
     # one star
     star1 = ["https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png",
@@ -55,10 +55,17 @@ def multi_flex(df) :
     
     # append acutual star
     store1[len(store1) - 1].append(store1[2])
-    store2[len(store1) - 1].append(store2[2])
-    store3[len(store1) - 1].append(store3[2])
-    store4[len(store1) - 1].append(store4[2])
-    store4[len(store1) - 1].append(store4[2])
+    store2[len(store2) - 1].append(store2[2])
+    store3[len(store3) - 1].append(store3[2])
+    store4[len(store4) - 1].append(store4[2])
+    store5[len(store5) - 1].append(store5[2])
+    
+    # get length of store list
+    len1 = len(store1)
+    len2 = len(store2)
+    len3 = len(store3)
+    len4 = len(store4)
+    len5 = len(store5)
     
     content = {
   "type": "carousel",
@@ -74,7 +81,7 @@ def multi_flex(df) :
     "aspectMode": "cover",
     "action": {
       "type": "uri",
-      "uri": "http://linecorp.com/"
+      "uri": store1[5]
     }
   },
   "body": {
@@ -95,31 +102,31 @@ def multi_flex(df) :
           {
             "type": "icon",
             "size": "sm",
-            "url": store1[5][0]
+            "url": store1[len1][0]
           },
           {
             "type": "icon",
             "size": "sm",
-            "url": store1[5][1]
+            "url": store1[len1][1]
           },
           {
             "type": "icon",
             "size": "sm",
-            "url": store1[5][2]
+            "url": store1[len1][2]
           },
           {
             "type": "icon",
             "size": "sm",
-            "url": store1[5][3]
+            "url": store1[len1][3]
           },
           {
             "type": "icon",
             "size": "sm",
-            "url": store1[5][4]
+            "url": store1[len1][4]
           },
           {
             "type": "text",
-            "text": str(store1[5][5]),
+            "text": str(store1[len1][5]),
             "size": "sm",
             "color": "#999999",
             "margin": "md",
@@ -192,7 +199,7 @@ def multi_flex(df) :
         "height": "sm",
         "action": {
           "type": "uri",
-          "label": "Link",
+          "label": "Google Map",
           "uri": store1[1]
         }
       },
@@ -202,8 +209,8 @@ def multi_flex(df) :
         "height": "sm",
         "action": {
           "type": "uri",
-          "label": "WEBSITE",
-          "uri": "https://linecorp.com"
+          "label": "官方網站",
+          "uri": store[5]
         }
       },
       {
@@ -227,7 +234,7 @@ def multi_flex(df) :
     "aspectMode": "cover",
     "action": {
       "type": "uri",
-      "uri": "http://linecorp.com/"
+      "uri": store2[5]
     }
   },
   "body": {
@@ -236,7 +243,7 @@ def multi_flex(df) :
     "contents": [
       {
         "type": "text",
-        "text": "Brown Cafe",
+        "text": store2[0],
         "weight": "bold",
         "size": "xl"
       },
@@ -248,31 +255,31 @@ def multi_flex(df) :
           {
             "type": "icon",
             "size": "sm",
-            "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png"
+            "url": store2[len2][0]
           },
           {
             "type": "icon",
             "size": "sm",
-            "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png"
+            "url": store2[len2][1]
           },
           {
             "type": "icon",
             "size": "sm",
-            "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png"
+            "url": store2[len2][2]
           },
           {
             "type": "icon",
             "size": "sm",
-            "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png"
+            "url": store2[len2][3]
           },
           {
             "type": "icon",
             "size": "sm",
-            "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gray_star_28.png"
+            "url": store2[len2][4]
           },
           {
             "type": "text",
-            "text": "4.0",
+            "text": str(store2[len2][5]),
             "size": "sm",
             "color": "#999999",
             "margin": "md",
@@ -300,7 +307,7 @@ def multi_flex(df) :
               },
               {
                 "type": "text",
-                "text": "Miraina Tower, 4-1-6 Shinjuku, Tokyo",
+                "text": store2[3],
                 "wrap": True,
                 "color": "#666666",
                 "size": "sm",
@@ -322,7 +329,7 @@ def multi_flex(df) :
               },
               {
                 "type": "text",
-                "text": "10:00 - 23:00",
+                "text": store2[4],
                 "wrap": True,
                 "color": "#666666",
                 "size": "sm",
@@ -345,8 +352,8 @@ def multi_flex(df) :
         "height": "sm",
         "action": {
           "type": "uri",
-          "label": "CALL",
-          "uri": "https://linecorp.com"
+          "label": "Google Map",
+          "uri": store2[1]
         }
       },
       {
@@ -355,8 +362,8 @@ def multi_flex(df) :
         "height": "sm",
         "action": {
           "type": "uri",
-          "label": "WEBSITE",
-          "uri": "https://linecorp.com"
+          "label": "官方網站",
+          "uri": store2[5]
         }
       },
       {
@@ -380,7 +387,7 @@ def multi_flex(df) :
     "aspectMode": "cover",
     "action": {
       "type": "uri",
-      "uri": "http://linecorp.com/"
+      "uri": store3[5]
     }
   },
   "body": {
@@ -389,7 +396,7 @@ def multi_flex(df) :
     "contents": [
       {
         "type": "text",
-        "text": "Brown Cafe",
+        "text": store3[0],
         "weight": "bold",
         "size": "xl"
       },
@@ -401,31 +408,31 @@ def multi_flex(df) :
           {
             "type": "icon",
             "size": "sm",
-            "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png"
+            "url": store3[len3][0]
           },
           {
             "type": "icon",
             "size": "sm",
-            "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png"
+            "url": store3[len3][1]
           },
           {
             "type": "icon",
             "size": "sm",
-            "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png"
+            "url": store3[len3][2]
           },
           {
             "type": "icon",
             "size": "sm",
-            "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png"
+            "url": store3[len3][3]
           },
           {
             "type": "icon",
             "size": "sm",
-            "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gray_star_28.png"
+            "url": store3[len3][4]
           },
           {
             "type": "text",
-            "text": "4.0",
+            "text": str(store3[len3][5]),
             "size": "sm",
             "color": "#999999",
             "margin": "md",
@@ -453,7 +460,7 @@ def multi_flex(df) :
               },
               {
                 "type": "text",
-                "text": "Miraina Tower, 4-1-6 Shinjuku, Tokyo",
+                "text": store3[3],
                 "wrap": True,
                 "color": "#666666",
                 "size": "sm",
@@ -475,7 +482,7 @@ def multi_flex(df) :
               },
               {
                 "type": "text",
-                "text": "10:00 - 23:00",
+                "text": store3[4],
                 "wrap": True,
                 "color": "#666666",
                 "size": "sm",
@@ -498,8 +505,8 @@ def multi_flex(df) :
         "height": "sm",
         "action": {
           "type": "uri",
-          "label": "CALL",
-          "uri": "https://linecorp.com"
+          "label": "Google Map",
+          "uri": store3[1]
         }
       },
       {
@@ -508,8 +515,8 @@ def multi_flex(df) :
         "height": "sm",
         "action": {
           "type": "uri",
-          "label": "WEBSITE",
-          "uri": "https://linecorp.com"
+          "label": "官方網站",
+          "uri": store3[5]
         }
       },
       {
@@ -533,7 +540,7 @@ def multi_flex(df) :
     "aspectMode": "cover",
     "action": {
       "type": "uri",
-      "uri": "http://linecorp.com/"
+      "uri": store4[5]
     }
   },
   "body": {
@@ -542,7 +549,7 @@ def multi_flex(df) :
     "contents": [
       {
         "type": "text",
-        "text": "Brown Cafe",
+        "text": store4[0],
         "weight": "bold",
         "size": "xl"
       },
@@ -554,31 +561,31 @@ def multi_flex(df) :
           {
             "type": "icon",
             "size": "sm",
-            "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png"
+            "url": store4[len4][0]
           },
           {
             "type": "icon",
             "size": "sm",
-            "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png"
+            "url": store4[len4][1]
           },
           {
             "type": "icon",
             "size": "sm",
-            "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png"
+            "url": store4[len4][2]
           },
           {
             "type": "icon",
             "size": "sm",
-            "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png"
+            "url": store4[len4][3]
           },
           {
             "type": "icon",
             "size": "sm",
-            "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gray_star_28.png"
+            "url": store4[len4][4]
           },
           {
             "type": "text",
-            "text": "4.0",
+            "text": str(store4[len4][5]),
             "size": "sm",
             "color": "#999999",
             "margin": "md",
@@ -606,7 +613,7 @@ def multi_flex(df) :
               },
               {
                 "type": "text",
-                "text": "Miraina Tower, 4-1-6 Shinjuku, Tokyo",
+                "text": store4[3],
                 "wrap": True,
                 "color": "#666666",
                 "size": "sm",
@@ -628,7 +635,7 @@ def multi_flex(df) :
               },
               {
                 "type": "text",
-                "text": "10:00 - 23:00",
+                "text": store4[4],
                 "wrap": True,
                 "color": "#666666",
                 "size": "sm",
@@ -651,8 +658,8 @@ def multi_flex(df) :
         "height": "sm",
         "action": {
           "type": "uri",
-          "label": "CALL",
-          "uri": "https://linecorp.com"
+          "label": "Google Map",
+          "uri": store4[1]
         }
       },
       {
@@ -661,8 +668,8 @@ def multi_flex(df) :
         "height": "sm",
         "action": {
           "type": "uri",
-          "label": "WEBSITE",
-          "uri": "https://linecorp.com"
+          "label": "官方網站",
+          "uri": store4[5]
         }
       },
       {
@@ -686,7 +693,7 @@ def multi_flex(df) :
     "aspectMode": "cover",
     "action": {
       "type": "uri",
-      "uri": "http://linecorp.com/"
+      "uri": store5[5]
     }
   },
   "body": {
@@ -695,7 +702,7 @@ def multi_flex(df) :
     "contents": [
       {
         "type": "text",
-        "text": "Brown Cafe",
+        "text": store5[0],
         "weight": "bold",
         "size": "xl"
       },
@@ -707,31 +714,31 @@ def multi_flex(df) :
           {
             "type": "icon",
             "size": "sm",
-            "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png"
+            "url": store5[len5][0]
           },
           {
             "type": "icon",
             "size": "sm",
-            "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png"
+            "url": store5[len5][1]
           },
           {
             "type": "icon",
             "size": "sm",
-            "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png"
+            "url": store5[len5][2]
           },
           {
             "type": "icon",
             "size": "sm",
-            "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png"
+            "url": store5[len5][3]
           },
           {
             "type": "icon",
             "size": "sm",
-            "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gray_star_28.png"
+            "url": store5[len5][4]
           },
           {
             "type": "text",
-            "text": "4.0",
+            "text": str(store5[len5][5]),
             "size": "sm",
             "color": "#999999",
             "margin": "md",
@@ -759,7 +766,7 @@ def multi_flex(df) :
               },
               {
                 "type": "text",
-                "text": "Miraina Tower, 4-1-6 Shinjuku, Tokyo",
+                "text": store5[3],
                 "wrap": True,
                 "color": "#666666",
                 "size": "sm",
@@ -781,7 +788,7 @@ def multi_flex(df) :
               },
               {
                 "type": "text",
-                "text": "10:00 - 23:00",
+                "text": store5[4],
                 "wrap": True,
                 "color": "#666666",
                 "size": "sm",
@@ -804,8 +811,8 @@ def multi_flex(df) :
         "height": "sm",
         "action": {
           "type": "uri",
-          "label": "CALL",
-          "uri": "https://linecorp.com"
+          "label": "Google Map",
+          "uri": store5[1]
         }
       },
       {
@@ -814,8 +821,8 @@ def multi_flex(df) :
         "height": "sm",
         "action": {
           "type": "uri",
-          "label": "WEBSITE",
-          "uri": "https://linecorp.com"
+          "label": "官方網站",
+          "uri": store5[5]
         }
       },
       {
