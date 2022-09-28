@@ -7,6 +7,8 @@ Created on Tue Sep 27 21:47:22 2022
 import pandas as pd
 
 def multi_flex(df) :
+    # fillna
+    df = df.fillna("無資料")
     # select name, link , star, address, opentime, blog
     store1 = [df.loc[0,"title"], df.loc[0,"link"],float(df.loc[0,"rating"]),df.loc[0,"address"],df.loc[0,"nextOpenTime"], df.loc[0, "blog_link"]]
     store2 = [df.loc[1,"title"], df.loc[1,"link"],float(df.loc[1,"rating"]),df.loc[1,"address"],df.loc[1,"nextOpenTime"], df.loc[1, "blog_link"]]
