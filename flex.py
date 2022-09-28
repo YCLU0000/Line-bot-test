@@ -61,11 +61,11 @@ def multi_flex(df) :
     store5[len(store5) - 1].append(store5[2])
     
     # get length of store list
-    len1 = len(store1)
-    len2 = len(store2)
-    len3 = len(store3)
-    len4 = len(store4)
-    len5 = len(store5)
+    len1 = len(store1) - 1
+    len2 = len(store2) - 1
+    len3 = len(store3) - 1
+    len4 = len(store4) - 1
+    len5 = len(store5) - 1
     
     content = {
   "type": "carousel",
